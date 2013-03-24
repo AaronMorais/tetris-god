@@ -9,6 +9,7 @@ function init() {
 	ctx = canvas.getContext('2d');
 	createShape();
 	createGrid();
+
 	setInterval(draw, 1);
 	setInterval(gravity, 1);
 	checkUserInput();
@@ -111,21 +112,16 @@ function get_random_color() {
 
 function checkUserInput(){
 	$(window).keydown(function(e) {
-		var movingShape = shapes[shapes.length - 1];
+		var tetramino = shapes[shapes.length - 1];
 		var key = e.keyCode;
 		switch(key){
 			case(37)://left
-				for(j = 0; j<movingShape.points.length; j++) {
-					movingShape.points[j].x -= 1;
-				}
-				
+				move("left", tetramino);
 				break;
 			case(38)://up
 				break;
 			case(39)://right
-				for(j = 0; j<movingShape.points.length; j++) {
-					movingShape.points[j].x += 1;
-				}
+				move("right", tetramino);
 				break;
 			case(40)://down
 				break;
@@ -133,3 +129,30 @@ function checkUserInput(){
 	});
 }
 
+
+function move(direction, tetramino){
+
+	var bounds = (direction === "left") ? 0 : 9;
+	var xTranslation = (direction === "left") ? -1 : 1;
+	if(checkCollision(bounds, xTranslation, tetramino) === false){
+		for(j = 0; j<tetramino.points.length; j++) {
+			tetramino.points[j].x += xTranslation;
+		}
+	}
+	invalid = true;
+	draw();
+
+}
+
+function checkCollision(bounds, xTranslation, tetramino){
+	var x;
+	var y;
+	for(j = 0; j<tetramino.points.length; j++) {
+		x = tetramino.points[j].x;
+		y = tetramino.points[j].y;
+		if(x === bounds || grid[x + xTranslation][y]){
+			return true;
+		}
+	}
+	return false;
+}
