@@ -12,13 +12,9 @@ function init() {
 }
 
 function createShape() {
-<<<<<<< HEAD
+
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
 	var shape = new Shape(type);
-=======
-	var shape = new Shape('L');
-
->>>>>>> 76517df45e286abe3bbec7666abe293dc0dc963d
 
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
@@ -63,7 +59,6 @@ function draw() {
 		invalid = false;
 	}
 }
-
 
 
 function Point(x,y) {
