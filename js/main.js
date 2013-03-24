@@ -99,15 +99,7 @@ function Point() {
 Point.prototype.draw = function() {
 	ctx.fillStyle = this.fill;
 	ctx.fillRect(this.x*40, this.y*40, this.w, this.h);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 };
-=======
-}
->>>>>>> Stashed changes
-=======
-}
->>>>>>> Stashed changes
 
 function get_random_color() {
     var letters = '0123456789ABCDEF'.split('');
@@ -116,12 +108,4 @@ function get_random_color() {
         color += letters[Math.round(Math.random() * 15)];
     }
     return color;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes
-=======
-}
->>>>>>> Stashed changes
