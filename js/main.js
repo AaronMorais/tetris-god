@@ -1,37 +1,19 @@
 var ctx;
 var invalid = false;
 var shapes = [];
+var shapeTypes = ['O','L','J','S','Z','I','T'];
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	createShape();
 	setInterval(draw, 100);
-	setInterval(gravity, 200);
+	setInterval(gravity, 50);
 }
 
 function createShape() {
-	var shape = new Shape();
-
-	var point = new Point();
-	point.x = 0;
-	point.y = 0;
-	shape.points.push(point);
-
-	point = new Point();
-	point.x = 1;
-	point.y = 1;
-	shape.points.push(point);
-
-	point = new Point();
-	point.x = 0;
-	point.y = 1;
-	shape.points.push(point);
-
-	point = new Point();
-	point.x = 1;
-	point.y = 0;
-	shape.points.push(point);
+	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+	var shape = new Shape(type);
 
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
@@ -44,7 +26,7 @@ function createShape() {
 function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
 		if(shapes[i].moving === false) {
-			break;
+			continue;
 		}
 		for(j = 0; j<shapes[i].points.length; j++) {
 			if(shapes[i].points[j].y >=19) {
