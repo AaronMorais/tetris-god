@@ -10,7 +10,7 @@ function init() {
 	createShape();
 	createGrid();
 	setInterval(draw, 100);
-	setInterval(gravity, 100);
+	setInterval(gravity, 1000);
 	checkUserInput();
 }
 
@@ -101,6 +101,7 @@ function checkRow() {
 			invalid = true;
 			draw();
 		}
+		invalid = true;
 	}
 }
 
@@ -109,6 +110,8 @@ function gravity() {
 	for(var j = 0; j<shape.points.length; j++) {
 		shape.points[j].gravity();
 	}
+	shape.pivot.gravity();
+
 	invalid = true;
 }
 
@@ -151,6 +154,7 @@ function checkUserInput(){
 				move("right", tetramino);
 				break;
 			case(40)://down
+				gravity();
 
 				break;
 		}
@@ -166,6 +170,7 @@ function move(direction, tetramino){
 		for(j = 0; j<tetramino.points.length; j++) {
 			tetramino.points[j].x += xTranslation;
 		}
+		tetramino.pivot.x += xTranslation;
 	}
 	invalid = true;
 	draw();
@@ -187,11 +192,17 @@ function checkCollision(bounds, xTranslation, tetramino){
 }
 
 function rotate(tetramino){
+
 	for(j = 0; j<tetramino.points.length; j++) {
-		x = tetramino.points[j].x;
-		y = tetramino.points[j].y;
-		tetramino.points[j].x = y;
-		tetramino.points[j].y = -x;
+		x = tetramino.points[j].x - tetramino.pivot.x;
+		y = tetramino.points[j].y - tetramino.pivot.y;
+		newX = -y + tetramino.pivot.x;
+		newY = x + tetramino.pivot.y;
+		if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
+			tetramino.points[j].x = newX;
+			tetramino.points[j].y = newY;
+
+		}
 	}
 	
 	invalid = true;
