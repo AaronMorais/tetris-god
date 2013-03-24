@@ -101,7 +101,7 @@ function checkRow() {
 						gridPoints[l][m] = null;
 					}
 				}
-			}	
+			}
 			invalid = true;
 			draw();
 		}
@@ -169,24 +169,34 @@ function move(direction, tetramino){
 
 	var bounds = (direction === "left") ? 0 : 9;
 	var xTranslation = (direction === "left") ? -1 : 1;
-	if(checkCollision(bounds, xTranslation, tetramino) === false){
+	
+	var Translate = function(point){
+		return {
+			x: point.x + xTranslation,
+			y: point.y
+		};
+	};
+
+	if(!checkCollision(Translate, tetramino)){
 		for(j = 0; j<tetramino.points.length; j++) {
 			tetramino.points[j].x += xTranslation;
 		}
 		tetramino.pivot.x += xTranslation;
+		invalid = true;
+		draw();
 	}
-	invalid = true;
-	draw();
 
 }
 
-function checkCollision(bounds, xTranslation, tetramino){
+function checkCollision(Translation, tetramino){
 	var x;
 	var y;
 	for(j = 0; j<tetramino.points.length; j++) {
 		x = tetramino.points[j].x;
 		y = tetramino.points[j].y;
-		if(x === bounds || gridPoints[x + xTranslation][y]){
+		newX = Translation(tetramino.points[j]).x;
+		newY = Translation(tetramino.points[j]).y;
+		if(newX < 0 || newX > 9 || gridPoints[newX][newY]){
 			return true;
 		}
 	}
@@ -196,19 +206,27 @@ function checkCollision(bounds, xTranslation, tetramino){
 
 function rotate(tetramino){
 
-	for(j = 0; j<tetramino.points.length; j++) {
-		x = tetramino.points[j].x - tetramino.pivot.x;
-		y = tetramino.points[j].y - tetramino.pivot.y;
-		newX = -y + tetramino.pivot.x;
-		newY = x + tetramino.pivot.y;
-		if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
-			tetramino.points[j].x = newX;
-			tetramino.points[j].y = newY;
+	var Translate = function(point){
+		return{
+			x: (point.y - tetramino.pivot.y) * -1 + tetramino.pivot.x,
+			y: point.x - tetramino.pivot.x + tetramino.pivot.y
+		};
+	};
 
+	if(!checkCollision(Translate, tetramino)){
+		for(j = 0; j<tetramino.points.length; j++) {
+			x = tetramino.points[j].x - tetramino.pivot.x;
+			y = tetramino.points[j].y - tetramino.pivot.y;
+			newX = y * -1 + tetramino.pivot.x;
+			newY = x + tetramino.pivot.y;
+			if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
+				tetramino.points[j].x = newX;
+				tetramino.points[j].y = newY;
+
+			}
 		}
+		invalid = true;
+		draw();
 	}
-	
-	invalid = true;
-	draw();
 }
 
