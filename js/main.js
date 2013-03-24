@@ -120,11 +120,13 @@ function checkUserInput(){
 				
 				break;
 			case(38)://up
+				rotate(tetramino);
 				break;
 			case(39)://right
 				move("right", tetramino);
 				break;
 			case(40)://down
+
 				break;
 		}
 	});
@@ -158,5 +160,16 @@ function checkCollision(bounds, xTranslation, tetramino){
 	return false;
 }
 
+function rotate(tetramino){
+	for(j = 0; j<tetramino.points.length; j++) {
+		x = tetramino.points[j].x;
+		y = tetramino.points[j].y;
+		tetramino.points[j].x = y;
+		tetramino.points[j].y = -x;
+	}
+	
+	invalid = true;
+	draw();
+}
 
 
