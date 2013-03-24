@@ -1,47 +1,44 @@
 var ctx;
 var invalid = false;
-var shapes = [];
+var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
-var grid = [];
+var gridPoints = [];
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	createShape();
 	createGrid();
-
-	setInterval(draw, 1);
-	setInterval(gravity, 1);
+	setInterval(draw, 100);
+	setInterval(gravity, 100);
 	checkUserInput();
 }
 
 function createGrid() {
-	grid = new Array(10);
-	for(i = 0; i < 10; i++) {
-		grid[i] = new Array(20);
+	gridPoints = new Array(10);
+	for(var i = 0; i < 10; i++) {
+		gridPoints[i] = new Array(20);
 	}
-	for(i = 0; i < 10; i++) {
-		for(j = 0; j < 20; j++) {
-			grid[i][j] = false;
+	for(var i = 0; i < 10; i++) {
+		for(var j = 0; j < 20; j++) {
+			gridPoints[i][j] = null;
 		}
 	}
 }
 
 function createShape() {
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-	var shape = new Shape(type);
+	shape = new Shape(type);
 
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
 		shape.points[j].fill = color;
 	}
-
-	shapes.push(shape);
 }
 
 function isGameOver() {
-	for(i=0; i<grid.length; i++) {
-		if(grid[i][0] || grid[i][1]) {
+	for(var i=0; i<gridPoints.length; i++) {
+		if(gridPoints[i][0] || gridPoints[i][1]) {
 			return true;
 		}
 	}
@@ -54,48 +51,50 @@ function gameOver() {
 }
 
 function checkMoving() {
-	for(var i = 0; i<shapes.length; i++) {
-		if(shapes[i].moving === false) {
-			continue;
-		}
-		for(var j = 0; j<shapes[i].points.length; j++) {
-			x = shapes[i].points[j].x;
-			y = shapes[i].points[j].y;
-			if(shapes[i].points[j].y >=19 || grid[x][y+1]) {
-				shapes[i].moving = false;
-				for(var k = 0; k<shapes[i].points.length; k++) {
-					x = shapes[i].points[k].x;
-					y = shapes[i].points[k].y;
-					grid[x][y] = true;
-				}
-				if(isGameOver()) {
-					gameOver();
-				} else {
-					createShape();
-				}
-				break;
+	for(var j = 0; j<shape.points.length; j++) {
+		x = shape.points[j].x;
+		y = shape.points[j].y + 1;
+
+		if(shape.points[j].y >=19 || gridPoints[x][y]) {
+			shape.moving = false;
+
+			for(var k = 0; k<shape.points.length; k++) {
+				x = shape.points[k].x;
+				y = shape.points[k].y;
+				gridPoints[x][y] = shape.points[k];
 			}
+
+			if(isGameOver()) {
+				gameOver();
+			} else {
+				createShape();
+			}
+			return false;
 		}
 	}
+	return true;
 }
 
 function gravity() {
-	checkMoving();
-	for(i = 0; i<shapes.length; i++) {
-		if(shapes[i].moving) {
-			for(j = 0; j<shapes[i].points.length; j++) {
-				shapes[i].points[j].gravity();
-			}
-			invalid = true;
+	if(shape.moving) {
+		if(!checkMoving()) { return; }
+		for(var j = 0; j<shape.points.length; j++) {
+			shape.points[j].gravity();
 		}
+		invalid = true;
 	}
 }
 
 function draw() {
 	if(invalid) {
 		ctx.clearRect(0,0, 400, 800);
-		for(i = 0; i<shapes.length; i++) {
-			shapes[i].draw();
+		shape.draw();
+		for(var i = 0; i < 10; i++) {
+			for(var j = 0; j < 20; j++) {
+				if(gridPoints[i][j]) {
+					gridPoints[i][j].draw();
+				}
+			}
 		}
 		invalid = false;
 	}
@@ -112,7 +111,7 @@ function get_random_color() {
 
 function checkUserInput(){
 	$(window).keydown(function(e) {
-		var tetramino = shapes[shapes.length - 1];
+		var tetramino = shape;
 		var key = e.keyCode;
 		switch(key){
 			case(37)://left
