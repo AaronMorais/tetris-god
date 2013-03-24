@@ -9,8 +9,8 @@ function init() {
 	ctx = canvas.getContext('2d');
 	createShape();
 	createGrid();
-	setInterval(draw, 100);
-	setInterval(gravity, 100);
+	setInterval(draw, 1);
+	setInterval(gravity, 1);
 }
 
 function createGrid() {
@@ -48,19 +48,20 @@ function isGameOver() {
 
 function gameOver() {
 	console.log("game over");
+	setTimeout(function() {	location.reload();},1000);
 }
 
 function checkMoving() {
-	for(i = 0; i<shapes.length; i++) {
+	for(var i = 0; i<shapes.length; i++) {
 		if(shapes[i].moving === false) {
 			continue;
 		}
-		for(j = 0; j<shapes[i].points.length; j++) {
+		for(var j = 0; j<shapes[i].points.length; j++) {
 			x = shapes[i].points[j].x;
 			y = shapes[i].points[j].y;
 			if(shapes[i].points[j].y >=19 || grid[x][y+1]) {
 				shapes[i].moving = false;
-				for(k = 0; k<shapes[i].points.length; k++) {
+				for(var k = 0; k<shapes[i].points.length; k++) {
 					x = shapes[i].points[k].x;
 					y = shapes[i].points[k].y;
 					grid[x][y] = true;
