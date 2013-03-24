@@ -9,14 +9,10 @@ function init() {
 	ctx = canvas.getContext('2d');
 	createShape();
 	createGrid();
-<<<<<<< HEAD
-	setInterval(draw, 1);
-	setInterval(gravity, 1);
-=======
+
 	setInterval(draw, 100);
-	setInterval(gravity, 100);
+	setInterval(gravity, 500);
 	checkUserInput();
->>>>>>> aeb2d11b9d34fa1ae39689090e927f5ca9c3bd50
 }
 
 function createGrid() {
@@ -137,7 +133,7 @@ function checkUserInput(){
 function moveLeft(tetramino){
 	var collision = false;
 	for(j = 0; j<tetramino.points.length; j++) {
-		if(grid[tetramino.points[j].x-1][tetramino.points[j].y] || tetramino.points[j].x === 0){
+		if(tetramino.points[j].x === 0 || grid[tetramino.points[j].x-1][tetramino.points[j].y]){
 			collision = true;
 		}
 	}
@@ -146,12 +142,13 @@ function moveLeft(tetramino){
 			tetramino.points[j].x -=1;
 		}
 	}
+	draw();
 }
 
 function moveRight(tetramino){
 	var collision = false;
 	for(j = 0; j<tetramino.points.length; j++) {
-		if(grid[tetramino.points[j].x+1][tetramino.points[j].y] || tetramino.points[j].x === 10){
+		if(tetramino.points[j].x === 9 ||grid[tetramino.points[j].x+1][tetramino.points[j].y]){
 			collision = true;
 		}
 	}
@@ -160,6 +157,7 @@ function moveRight(tetramino){
 			tetramino.points[j].x +=1;
 		}
 	}
+	draw();
 }
 
 
