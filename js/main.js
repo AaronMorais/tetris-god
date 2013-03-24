@@ -9,8 +9,14 @@ function init() {
 	ctx = canvas.getContext('2d');
 	createShape();
 	createGrid();
+<<<<<<< HEAD
 	setInterval(draw, 1);
 	setInterval(gravity, 1);
+=======
+	setInterval(draw, 100);
+	setInterval(gravity, 50);
+	checkUserInput();
+>>>>>>> aeb2d11b9d34fa1ae39689090e927f5ca9c3bd50
 }
 
 function createGrid() {
@@ -107,3 +113,28 @@ function get_random_color() {
     }
     return color;
 }
+
+function checkUserInput(){
+	$(window).keydown(function(e) {
+		var movingShape = shapes[shapes.length - 1];
+		var key = e.keyCode;
+		switch(key){
+			case(37)://left
+				for(j = 0; j<movingShape.points.length; j++) {
+					movingShape.points[j].x -= 1;
+				}
+				
+				break;
+			case(38)://up
+				break;
+			case(39)://right
+				for(j = 0; j<movingShape.points.length; j++) {
+					movingShape.points[j].x += 1;
+				}
+				break;
+			case(40)://down
+				break;
+		}
+	});
+}
+
