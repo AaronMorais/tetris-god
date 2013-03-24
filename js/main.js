@@ -7,7 +7,7 @@ function init() {
 	ctx = canvas.getContext('2d');
 	createShape();
 	setInterval(draw, 100);
-	setInterval(gravity, 1000);
+	setInterval(gravity, 200);
 }
 
 function createShape() {
@@ -33,18 +33,23 @@ function createShape() {
 	point.y = 0;
 	shape.points.push(point);
 
+	var color = get_random_color();
+	for(j = 0; j<shape.points.length; j++) {
+		shape.points[j].fill = color;
+	}
+
 	shapes.push(shape);
 }
 
 function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
-
 		if(shapes[i].moving === false) {
 			break;
 		}
 		for(j = 0; j<shapes[i].points.length; j++) {
 			if(shapes[i].points[j].y >=19) {
 				shapes[i].moving = false;
+				createShape();
 			}
 		}
 	}
@@ -94,4 +99,21 @@ function Point() {
 Point.prototype.draw = function() {
 	ctx.fillStyle = this.fill;
 	ctx.fillRect(this.x*40, this.y*40, this.w, this.h);
+<<<<<<< Updated upstream
 };
+=======
+}
+>>>>>>> Stashed changes
+
+function get_random_color() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.round(Math.random() * 15)];
+    }
+    return color;
+<<<<<<< Updated upstream
+}
+=======
+}
+>>>>>>> Stashed changes
