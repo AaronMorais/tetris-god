@@ -10,7 +10,7 @@ function init() {
 	createShape();
 	createGrid();
 	setInterval(draw, 100);
-	setInterval(gravity, 50);
+	setInterval(gravity, 100);
 	checkUserInput();
 }
 
@@ -110,25 +110,50 @@ function get_random_color() {
 
 function checkUserInput(){
 	$(window).keydown(function(e) {
-		var movingShape = shapes[shapes.length - 1];
+		var tetramino = shapes[shapes.length - 1];
 		var key = e.keyCode;
 		switch(key){
 			case(37)://left
-				for(j = 0; j<movingShape.points.length; j++) {
-					movingShape.points[j].x -= 1;
-				}
+				moveLeft(tetramino);
 				
 				break;
 			case(38)://up
 				break;
 			case(39)://right
-				for(j = 0; j<movingShape.points.length; j++) {
-					movingShape.points[j].x += 1;
-				}
+				moveRight(tetramino);
 				break;
 			case(40)://down
 				break;
 		}
 	});
 }
+
+function moveLeft(tetramino){
+	var collision = false;
+	for(j = 0; j<tetramino.points.length; j++) {
+		if(grid[tetramino.points[j].x-1][tetramino.points[j].y] || tetramino.points[j].x === 0){
+			collision = true;
+		}
+	}
+	if(collision === false){
+		for(j = 0; j<tetramino.points.length; j++) {
+			tetramino.points[j].x -=1;
+		}
+	}
+}
+
+function moveRight(tetramino){
+	var collision = false;
+	for(j = 0; j<tetramino.points.length; j++) {
+		if(grid[tetramino.points[j].x+1][tetramino.points[j].y] || tetramino.points[j].x === 10){
+			collision = true;
+		}
+	}
+	if(collision === false){
+		for(j = 0; j<tetramino.points.length; j++) {
+			tetramino.points[j].x +=1;
+		}
+	}
+}
+
 
