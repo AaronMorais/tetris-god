@@ -1,6 +1,5 @@
 function Shape(type){
 	this.points = [];
-	this.moving = true;
 
 	switch(type){
 		case 'O':

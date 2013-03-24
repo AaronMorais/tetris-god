@@ -28,7 +28,7 @@ function createGrid() {
 
 function createShape() {
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-	shape = new Shape(type);
+	shape = new Shape('I');
 
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
@@ -56,8 +56,6 @@ function checkMoving() {
 		y = shape.points[j].y + 1;
 
 		if(shape.points[j].y >=19 || gridPoints[x][y]) {
-			shape.moving = false;
-
 			for(var k = 0; k<shape.points.length; k++) {
 				x = shape.points[k].x;
 				y = shape.points[k].y;
@@ -67,6 +65,7 @@ function checkMoving() {
 			if(isGameOver()) {
 				gameOver();
 			} else {
+				checkRow();
 				createShape();
 			}
 			return false;
@@ -75,14 +74,42 @@ function checkMoving() {
 	return true;
 }
 
-function gravity() {
-	if(shape.moving) {
-		if(!checkMoving()) { return; }
-		for(var j = 0; j<shape.points.length; j++) {
-			shape.points[j].gravity();
+function checkRow() {
+	for(var i=0; i<gridPoints[0].length; i++) {
+		//check if row is complete and should be removed
+		var complete = true;
+		var completeY;
+		for(var j=0; j<gridPoints.length; j++) {
+			if(!gridPoints[j][i]) {
+				complete = false;
+				completeY = i;
+			}
 		}
-		invalid = true;
+
+		if(complete) {
+			//remove row points by making them null
+			for(var j=0; j<gridPoints.length; j++) {
+				gridPoints[j][i] = null;
+			}
+			//shift down all rows above deleted row
+			for(var i=0; i<gridPoints.length; i++) {
+				for(var j=18; j>=0; j--) {	
+					gridPoints[i][j+1] = gridPoints[i][j];
+					gridPoints[i][j] = null;
+				}
+			}	
+			invalid = true;
+			draw();
+		}
 	}
+}
+
+function gravity() {
+	if(!checkMoving()) { return; }
+	for(var j = 0; j<shape.points.length; j++) {
+		shape.points[j].gravity();
+	}
+	invalid = true;
 }
 
 function draw() {
