@@ -2,23 +2,32 @@ var ctx;
 var invalid = false;
 var shapes = [];
 var shapeTypes = ['O','L','J','S','Z','I','T'];
+var grid = [];
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	createShape();
+	createGrid();
 	setInterval(draw, 100);
-	setInterval(gravity, 50);
+	setInterval(gravity, 100);
+}
+
+function createGrid() {
+	grid = new Array(10);
+	for(i = 0; i < 10; i++) {
+		grid[i] = new Array(20);
+	}
+	for(i = 0; i < 10; i++) {
+		for(j = 0; j < 20; j++) {
+			grid[i][j] = false;
+		}
+	}
 }
 
 function createShape() {
-<<<<<<< HEAD
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
 	var shape = new Shape(type);
-=======
-	var shape = new Shape('L');
-
->>>>>>> 76517df45e286abe3bbec7666abe293dc0dc963d
 
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
@@ -34,9 +43,18 @@ function checkMoving() {
 			continue;
 		}
 		for(j = 0; j<shapes[i].points.length; j++) {
-			if(shapes[i].points[j].y >=19) {
+			x = shapes[i].points[j].x;
+			y = shapes[i].points[j].y;
+			if(shapes[i].points[j].y >=19 || grid[x][y+1]) {
+				console.log(shapes[i]);
 				shapes[i].moving = false;
 				createShape();
+				for(k = 0; k<shapes[i].points.length; k++) {
+					x = shapes[i].points[k].x;
+					y = shapes[i].points[k].y;
+					grid[x][y] = true;
+				}
+				break;
 			}
 		}
 	}
@@ -47,7 +65,7 @@ function gravity() {
 	for(i = 0; i<shapes.length; i++) {
 		if(shapes[i].moving) {
 			for(j = 0; j<shapes[i].points.length; j++) {
-				shapes[i].points[j].y +=1;
+				shapes[i].points[j].gravity();
 			}
 			invalid = true;
 		}
@@ -63,21 +81,6 @@ function draw() {
 		invalid = false;
 	}
 }
-
-
-
-function Point(x,y) {
-	this.x = x;
-	this.y = y;
-	this.w = 40;
-	this.h = 40;
-	this.fill = '#000FF';
-}
-
-Point.prototype.draw = function() {
-	ctx.fillStyle = this.fill;
-	ctx.fillRect(this.x*40, this.y*40, this.w, this.h);
-};
 
 function get_random_color() {
     var letters = '0123456789ABCDEF'.split('');
