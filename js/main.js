@@ -93,7 +93,7 @@ function checkRow() {
 			}
 			//shift down all rows above deleted row
 			for(var i=0; i<gridPoints.length; i++) {
-				for(var j=18; j>=0; j--) {	
+				for(var j=completeY; j>=0; j--) {	
 					gridPoints[i][j+1] = gridPoints[i][j];
 					gridPoints[i][j] = null;
 				}
