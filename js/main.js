@@ -11,24 +11,24 @@ function init() {
 }
 
 function createShape() {
-	var shape = new Shape;
+	var shape = new Shape();
 
-	var point = new Point;
+	var point = new Point();
 	point.x = 0;
 	point.y = 0;
 	shape.points.push(point);
 
-	point = new Point;
+	point = new Point();
 	point.x = 1;
 	point.y = 1;
 	shape.points.push(point);
 
-	point = new Point;
+	point = new Point();
 	point.x = 0;
 	point.y = 1;
 	shape.points.push(point);
 
-	point = new Point;
+	point = new Point();
 	point.x = 1;
 	point.y = 0;
 	shape.points.push(point);
@@ -38,7 +38,8 @@ function createShape() {
 
 function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
-		if(shapes[i].moving == false) {
+
+		if(shapes[i].moving === false) {
 			break;
 		}
 		for(j = 0; j<shapes[i].points.length; j++) {
@@ -80,7 +81,7 @@ Shape.prototype.draw = function() {
 	for(j = 0; j<this.points.length; j++) {
 		this.points[j].draw();
 	}
-}
+};
 
 function Point() {
 	this.x = 0;
@@ -93,4 +94,4 @@ function Point() {
 Point.prototype.draw = function() {
 	ctx.fillStyle = this.fill;
 	ctx.fillRect(this.x*40, this.y*40, this.w, this.h);
-}
+};
