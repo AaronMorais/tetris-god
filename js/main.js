@@ -1,11 +1,13 @@
 var ctx;
+var invalid = false;
 var shapes = [];
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	createShape();
-	setInterval(draw, 1000);
+	setInterval(draw, 100);
+	setInterval(gravity, 1000);
 }
 
 function createShape() {
@@ -34,19 +36,39 @@ function createShape() {
 	shapes.push(shape);
 }
 
-function gravity() {
+function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
+		if(shapes[i].moving = false) {
+			break;
+		}
 		for(j = 0; j<shapes[i].points.length; j++) {
-			shapes[i].points[j].y +=1;
+			if(shapes[i].points[j].y >=19) {
+				shapes[i].moving = false;
+			}
+		}
+	}
+}
+
+function gravity() {
+	checkMoving();
+	for(i = 0; i<shapes.length; i++) {
+		shapes[i].moving = true;
+		if(shapes[i].moving) {
+			for(j = 0; j<shapes[i].points.length; j++) {
+				shapes[i].points[j].y +=1;
+			}
+			invalid = true;
 		}
 	}
 }
 
 function draw() {
-	ctx.clearRect(0,0, 400, 800);
-	gravity();
-	for(i = 0; i<shapes.length; i++) {
-		shapes[i].draw();
+	if(invalid) {
+		ctx.clearRect(0,0, 400, 800);
+		for(i = 0; i<shapes.length; i++) {
+			shapes[i].draw();
+		}
+		invalid = false;
 	}
 }
 
@@ -71,5 +93,5 @@ function Point() {
 
 Point.prototype.draw = function() {
 	ctx.fillStyle = this.fill;
-	ctx.fillRect(this.x*10, this.y*10, this.w, this.h);
+	ctx.fillRect(this.x*40, this.y*40, this.w, this.h);
 }
