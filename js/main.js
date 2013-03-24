@@ -37,6 +37,19 @@ function createShape() {
 	shapes.push(shape);
 }
 
+function isGameOver() {
+	for(i=0; i<grid.length; i++) {
+		if(grid[i][0] || grid[i][1]) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function gameOver() {
+	console.log("game over");
+}
+
 function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
 		if(shapes[i].moving === false) {
@@ -46,13 +59,16 @@ function checkMoving() {
 			x = shapes[i].points[j].x;
 			y = shapes[i].points[j].y;
 			if(shapes[i].points[j].y >=19 || grid[x][y+1]) {
-				console.log(shapes[i]);
 				shapes[i].moving = false;
-				createShape();
 				for(k = 0; k<shapes[i].points.length; k++) {
 					x = shapes[i].points[k].x;
 					y = shapes[i].points[k].y;
 					grid[x][y] = true;
+				}
+				if(isGameOver()) {
+					gameOver();
+				} else {
+					createShape();
 				}
 				break;
 			}
