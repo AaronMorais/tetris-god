@@ -116,13 +116,13 @@ function checkUserInput(){
 		var key = e.keyCode;
 		switch(key){
 			case(37)://left
-				moveLeft(tetramino);
+				move("left", tetramino);
 				
 				break;
 			case(38)://up
 				break;
 			case(39)://right
-				moveRight(tetramino);
+				move("right", tetramino);
 				break;
 			case(40)://down
 				break;
@@ -130,34 +130,33 @@ function checkUserInput(){
 	});
 }
 
-function moveLeft(tetramino){
-	var collision = false;
-	for(j = 0; j<tetramino.points.length; j++) {
-		if(tetramino.points[j].x === 0 || grid[tetramino.points[j].x-1][tetramino.points[j].y]){
-			collision = true;
-		}
-	}
-	if(collision === false){
+
+function move(direction, tetramino){
+
+	var bounds = (direction === "left") ? 0 : 9;
+	var xTranslation = (direction === "left") ? -1 : 1;
+	if(checkCollision(bounds, xTranslation, tetramino) === false){
 		for(j = 0; j<tetramino.points.length; j++) {
-			tetramino.points[j].x -=1;
+			tetramino.points[j].x += xTranslation;
 		}
 	}
+	invalid = true;
 	draw();
+
 }
 
-function moveRight(tetramino){
-	var collision = false;
+function checkCollision(bounds, xTranslation, tetramino){
+	var x;
+	var y;
 	for(j = 0; j<tetramino.points.length; j++) {
-		if(tetramino.points[j].x === 9 ||grid[tetramino.points[j].x+1][tetramino.points[j].y]){
-			collision = true;
+		x = tetramino.points[j].x;
+		y = tetramino.points[j].y;
+		if(x === bounds || grid[x + xTranslation][y]){
+			return true;
 		}
 	}
-	if(collision === false){
-		for(j = 0; j<tetramino.points.length; j++) {
-			tetramino.points[j].x +=1;
-		}
-	}
-	draw();
+	return false;
 }
+
 
 
