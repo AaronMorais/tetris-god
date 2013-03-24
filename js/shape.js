@@ -29,9 +29,9 @@ function Shape(type){
 			break;
 		case 'Z':
 			this.points.push(new Point(0,0));
-			this.points.push(new Point(0,1));
+			this.points.push(new Point(1,0));
 			this.points.push(new Point(1,1));
-			this.points.push(new Point(1,2));
+			this.points.push(new Point(2,1));
 			break;
 		case 'I':
 			this.points.push(new Point(0,0));
