@@ -81,6 +81,7 @@ function gravity() {
 		for(var j = 0; j<shape.points.length; j++) {
 			shape.points[j].gravity();
 		}
+		shape.pivot.gravity();
 		invalid = true;
 	}
 }
@@ -124,6 +125,7 @@ function checkUserInput(){
 				move("right", tetramino);
 				break;
 			case(40)://down
+				gravity();
 
 				break;
 		}
@@ -139,6 +141,7 @@ function move(direction, tetramino){
 		for(j = 0; j<tetramino.points.length; j++) {
 			tetramino.points[j].x += xTranslation;
 		}
+		tetramino.pivot.x += xTranslation;
 	}
 	invalid = true;
 	draw();
@@ -160,16 +163,12 @@ function checkCollision(bounds, xTranslation, tetramino){
 }
 
 function rotate(tetramino){
-	var pivot = {
-		x : tetramino.points[0].x,
-		y : tetramino.points[0].y
-	};
 
 	for(j = 0; j<tetramino.points.length; j++) {
-		x = tetramino.points[j].x - pivot.x;
-		y = tetramino.points[j].y - pivot.y;
-		newX = -y + pivot.x;
-		newY = x + pivot.y;
+		x = tetramino.points[j].x - tetramino.pivot.x;
+		y = tetramino.points[j].y - tetramino.pivot.y;
+		newX = -y + tetramino.pivot.x;
+		newY = x + tetramino.pivot.y;
 		if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
 			tetramino.points[j].x = newX;
 			tetramino.points[j].y = newY;
