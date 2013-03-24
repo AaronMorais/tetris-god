@@ -38,7 +38,7 @@ function createShape() {
 
 function checkMoving() {
 	for(i = 0; i<shapes.length; i++) {
-		if(shapes[i].moving = false) {
+		if(shapes[i].moving == false) {
 			break;
 		}
 		for(j = 0; j<shapes[i].points.length; j++) {
@@ -52,7 +52,6 @@ function checkMoving() {
 function gravity() {
 	checkMoving();
 	for(i = 0; i<shapes.length; i++) {
-		shapes[i].moving = true;
 		if(shapes[i].moving) {
 			for(j = 0; j<shapes[i].points.length; j++) {
 				shapes[i].points[j].y +=1;
