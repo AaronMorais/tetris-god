@@ -130,6 +130,13 @@ function gravity() {
 		shape.pivot.gravity();
 	}
 	invalid = true;
+	return shape ? true : false;
+}
+
+function recursiveGravity() {
+	if(gravity()){
+		recursiveGravity();
+	}
 }
 
 function draw() {
@@ -172,6 +179,7 @@ function checkUserInput(){
 				rotate('ccw', tetramino);
 				break;
 			case(32)://spacebar
+				recursiveGravity();
 				break;
 		}
 	});
