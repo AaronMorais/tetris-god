@@ -104,7 +104,7 @@ function Shape(type, colourScheme){
 			this.points.push(new Point(0,1));
 			this.points.push(new Point(2,1));
 			this.points.push(new Point(1,0));
-			this.pivot = new Point(1,0);
+			this.pivot = new Point(1,1);
 			break;
 	}
 
