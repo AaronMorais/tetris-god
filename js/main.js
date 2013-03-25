@@ -34,7 +34,7 @@ function createShape() {
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
 		shape.points[j].x += shape.initialOffset;
-		shape.points[j].fill = color;
+		shape.points[j].fill = shape.colour;
 	}
 	shape.pivot.x += shape.initialOffset;
 	setNext();
