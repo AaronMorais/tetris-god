@@ -26,6 +26,11 @@
         <button type="button" id="I">I</button>
         <button type="button" id="T">T</button>
         </br>
+        <button type="button" id="Random">Random</button>
+        <button type="button" id="Standard">Standard</button>
+        <button type="button" id="Black">Black</button>
+        <button type="button" id="Dull">Dull</button>
+        </br>
         </br>
         <a href="/index.html">Play as a mortal</a>
     </body>
@@ -50,6 +55,18 @@
     });
     $("#T").click(function() {
         socket.emit("setNextType", "T");
+    });
+    $("#Random").click(function() {
+        socket.emit("setColour", "Random");
+    });
+    $("#Standard").click(function() {
+        socket.emit("setColour", "Standard");
+    });
+    $("#Black").click(function() {
+        socket.emit("setColour", "Black");
+    });
+    $("#Dull").click(function() {
+        socket.emit("setNextType", "Dull");
     });
     </script>
     </html>
