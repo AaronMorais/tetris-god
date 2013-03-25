@@ -3,10 +3,12 @@ var invalid = false;
 var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
+var nextType;
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
+	setNext();
 	createShape();
 	createGrid();
 	setInterval(draw, 100);
@@ -27,13 +29,18 @@ function createGrid() {
 }
 
 function createShape() {
-	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-	shape = new Shape('I');
-
+	shape = new Shape(nextType);
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
 		shape.points[j].fill = color;
 	}
+	setNext();
+}
+
+function setNext() {
+	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
+	nextType = type;
+	$('#type').text("Next Piece is: " + nextType);
 }
 
 function isGameOver() {
