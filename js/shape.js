@@ -1,5 +1,9 @@
 function Shape(type){
 	this.points = [];
+<<<<<<< HEAD
+
+=======
+>>>>>>> bb28b3d2e1967112d7102f786f775426ad05c35a
 	switch(type){
 		case 'O':
 			this.points.push(new Point(0,0));

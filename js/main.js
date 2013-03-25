@@ -88,20 +88,23 @@ function checkRow() {
 
 		if(complete) {
 			//remove row points by making them null
-			for(var j=0; j<gridPoints.length; j++) {
-				gridPoints[j][i] = null;
+			for(var k=0; k<gridPoints.length; k++) {
+				gridPoints[k][i] = null;
 			}
 			//shift down all rows above deleted row
-			for(var i=0; i<gridPoints.length; i++) {
-				for(var j=completeY; j>=0; j--) {	
-					gridPoints[i][j+1] = gridPoints[i][j];
-					gridPoints[i][j] = null;
+			for(var l=0; l<gridPoints.length; l++) {
+				for(var m=completeY; m>=0; m--) {	
+					var point = gridPoints[l][m];
+					if(point) {
+						point.y +=1;
+						gridPoints[l][m+1] = point;
+						gridPoints[l][m] = null;
+					}
 				}
 			}
 			invalid = true;
 			draw();
 		}
-		invalid = true;
 	}
 }
 
