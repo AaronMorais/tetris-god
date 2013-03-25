@@ -68,9 +68,9 @@ function checkMoving() {
 				x = shape.points[k].x;
 				y = shape.points[k].y;
 				gridPoints[x][y] = shape.points[k];
-				shape = null;
 			}
-
+			shape = null;
+			
 			if(isGameOver()) {
 				gameOver();
 			} else {
@@ -119,8 +119,8 @@ function checkRow() {
 }
 
 function gravity() {
-	if(!checkMoving()) { return; }
 	if(shape) {
+		if(!checkMoving()) { return; }
 		for(var j = 0; j<shape.points.length; j++) {
 			shape.points[j].gravity();
 		}
