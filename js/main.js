@@ -4,7 +4,7 @@ var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
 var nextType;
-var colourScheme = "standard";
+var colourScheme = "Standard";
 
 function init() {
 	canvas = document.getElementById('canvas');

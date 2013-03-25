@@ -3,7 +3,7 @@ function Shape(type, colourScheme){
 	this.initialOffset = 3;
 	var self = this;
 	this.colourScheme = {
-		'standard': {
+		'Standard': {
 			'O': '#FFF000',
 			'L': '#FF9900',
 			'J': '#0000FF',
@@ -13,7 +13,7 @@ function Shape(type, colourScheme){
 			'T': '#990099'
 		},
 
-		'dull' : {
+		'Dull' : {
 			'O': '#202020',
 			'L': '#404040',
 			'J': '#606060',
@@ -23,7 +23,7 @@ function Shape(type, colourScheme){
 			'T': '#C0C0C0'
 		},
 
-		'black' : {
+		'Black' : {
 			'O': '#000000',
 			'L': '#000000',
 			'J': '#000000',
@@ -33,7 +33,7 @@ function Shape(type, colourScheme){
 			'T': '#000000'
 		},
 
-		'random' : {
+		'Random' : {
 			'O': get_random_colour(),
 			'L': get_random_colour(),
 			'J': get_random_colour(),
