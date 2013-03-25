@@ -4,6 +4,7 @@ var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
 var nextType;
+var colourScheme = "standard";
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -30,8 +31,7 @@ function createGrid() {
 }
 
 function createShape() {
-	shape = new Shape(nextType);
-	var color = get_random_color();
+	shape = new Shape(nextType, colourScheme);
 	for(j = 0; j<shape.points.length; j++) {
 		shape.points[j].x += shape.initialOffset;
 		shape.points[j].fill = shape.colour;
@@ -154,15 +154,6 @@ function draw() {
 		}
 		invalid = false;
 	}
-}
-
-function get_random_color() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.round(Math.random() * 15)];
-    }
-    return color;
 }
 
 function checkUserInput(){
