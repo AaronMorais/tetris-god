@@ -28,21 +28,21 @@ function Shape(type){
 			this.points.push(new Point(2,0));
 			this.points.push(new Point(0,1));
 			this.points.push(new Point(1,1));
-			this.pivot = new Point(2,0);
+			this.pivot = new Point(1,1);
 			break;
 		case 'Z':
 			this.points.push(new Point(0,0));
 			this.points.push(new Point(1,0));
 			this.points.push(new Point(1,1));
 			this.points.push(new Point(2,1));
-			this.pivot = new Point(2,0);
+			this.pivot = new Point(1,1);
 			break;
 		case 'I':
-			this.points.push(new Point(0,0));
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(0,2));
-			this.points.push(new Point(0,3));
-			this.pivot = new Point(0,0);
+			this.points.push(new Point(1,0));
+			this.points.push(new Point(1,1));
+			this.points.push(new Point(1,2));
+			this.points.push(new Point(1,3));
+			this.pivot = new Point(1.5,1.5);
 			break;
 		case 'T':
 			this.points.push(new Point(1,0));
