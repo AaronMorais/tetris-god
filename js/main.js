@@ -217,7 +217,7 @@ function checkCollision(Translation, tetramino){
 		y = tetramino.points[j].y;
 		newX = Translation(tetramino.points[j]).x;
 		newY = Translation(tetramino.points[j]).y;
-		if(newX < 0 || newX > 9 || gridPoints[newX][newY]){
+		if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
 			return true;
 		}
 	}
