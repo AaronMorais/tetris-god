@@ -33,8 +33,10 @@ function createShape() {
 	shape = new Shape(nextType);
 	var color = get_random_color();
 	for(j = 0; j<shape.points.length; j++) {
+		shape.points[j].x += shape.initialOffset;
 		shape.points[j].fill = color;
 	}
+	shape.pivot.x += shape.initialOffset;
 	setNext();
 }
 
