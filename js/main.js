@@ -20,10 +20,10 @@ function createGrid() {
 	gridPoints = new Array(10);
 	var i;
 	for(i = 0; i < 10; i++) {
-		gridPoints[i] = new Array(20);
+		gridPoints[i] = new Array(22);
 	}
 	for(i = 0; i < 10; i++) {
-		for(var j = 0; j < 20; j++) {
+		for(var j = 0; j < 22; j++) {
 			gridPoints[i][j] = null;
 		}
 	}
@@ -59,11 +59,12 @@ function gameOver() {
 }
 
 function checkMoving() {
+	if(!shape) {return;}
 	for(var j = 0; j<shape.points.length; j++) {
 		x = shape.points[j].x;
 		y = shape.points[j].y + 1;
 
-		if(shape.points[j].y >=19 || gridPoints[x][y]) {
+		if(shape.points[j].y >=21 || gridPoints[x][y]) {
 			for(var k = 0; k<shape.points.length; k++) {
 				x = shape.points[k].x;
 				y = shape.points[k].y;
@@ -132,9 +133,11 @@ function gravity() {
 function draw() {
 	if(invalid) {
 		ctx.clearRect(0,0, 400, 800);
-		shape.draw();
+		if(shape) {
+			shape.draw();
+		}
 		for(var i = 0; i < 10; i++) {
-			for(var j = 0; j < 20; j++) {
+			for(var j = 0; j < 22; j++) {
 				if(gridPoints[i][j]) {
 					gridPoints[i][j].draw();
 				}
@@ -155,6 +158,7 @@ function get_random_color() {
 
 function checkUserInput(){
 	$(window).keydown(function(e) {
+		if(!shape) { return;}
 		var tetramino = shape;
 		var key = e.keyCode;
 		switch(key){
