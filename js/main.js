@@ -41,6 +41,7 @@ function createShape() {
 function setNext() {
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
 	nextType = type;
+	nextType = 'O';
 	$('#type').text("Next Piece is: " + nextType);
 }
 
