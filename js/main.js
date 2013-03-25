@@ -18,10 +18,11 @@ function init() {
 
 function createGrid() {
 	gridPoints = new Array(10);
-	for(var i = 0; i < 10; i++) {
+	var i;
+	for(i = 0; i < 10; i++) {
 		gridPoints[i] = new Array(20);
 	}
-	for(var i = 0; i < 10; i++) {
+	for(i = 0; i < 10; i++) {
 		for(var j = 0; j < 20; j++) {
 			gridPoints[i][j] = null;
 		}
@@ -100,7 +101,7 @@ function checkRow() {
 			}
 			//shift down all rows above deleted row
 			for(var l=0; l<gridPoints.length; l++) {
-				for(var m=completeY; m>=0; m--) {	
+				for(var m=completeY; m>=0; m--) {
 					var point = gridPoints[l][m];
 					if(point) {
 						point.y +=1;
