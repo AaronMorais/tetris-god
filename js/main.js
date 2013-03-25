@@ -1,6 +1,6 @@
 var ctx;
 var invalid = false;
-var shape;
+var shape, ghost;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
 var nextType;
@@ -37,6 +37,7 @@ function createShape() {
 		shape.points[j].fill = shape.colour;
 	}
 	shape.pivot.x += shape.initialOffset;
+	//ghost = new Ghost(shape);
 	setNext();
 }
 
@@ -124,10 +125,7 @@ function checkRow() {
 function gravity() {
 	if(shape) {
 		if(!checkMoving()) { return; }
-		for(var j = 0; j<shape.points.length; j++) {
-			shape.points[j].gravity();
-		}
-		shape.pivot.gravity();
+		shape.gravity();
 	}
 	invalid = true;
 	return shape ? true : false;
@@ -159,96 +157,29 @@ function draw() {
 function checkUserInput(){
 	$(window).keydown(function(e) {
 		if(!shape) { return;}
-		var tetramino = shape;
 		var key = e.keyCode;
 		switch(key){
 			case(37)://left
-				move("left", tetramino);
+				shape.move("left");
 				break;
 			case(38)://up
-				rotate('cw', tetramino);
+				shape.rotate('cw');
 				break;
 			case(39)://right
-				move("right", tetramino);
+				shape.move("right");
 				break;
 			case(40)://down
 				gravity();
 				gravity();
 				break;
 			case(18): //option
-				rotate('ccw', tetramino);
+				shape.rotate('ccw');
 				break;
 			case(32)://spacebar
 				recursiveGravity();
 				break;
 		}
+		draw();
 	});
 }
 
-
-function move(direction, tetramino){
-
-	var bounds = (direction === "left") ? 0 : 9;
-	var xTranslation = (direction === "left") ? -1 : 1;
-	
-	var Translate = function(point){
-		return {
-			x: point.x + xTranslation,
-			y: point.y
-		};
-	};
-
-	if(!checkCollision(Translate, tetramino)){
-		for(j = 0; j<tetramino.points.length; j++) {
-			tetramino.points[j].x += xTranslation;
-		}
-		tetramino.pivot.x += xTranslation;
-		invalid = true;
-		draw();
-	}
-
-}
-
-
-function rotate(direction,tetramino){
-
-	var change = (direction === "ccw" ? 1 : -1);
-	var Translate = function(point){
-		return{
-			x: (point.y - tetramino.pivot.y) * change + tetramino.pivot.x,
-			y: (point.x - tetramino.pivot.x) * -change + tetramino.pivot.y
-		};
-	};
-
-	if(!checkCollision(Translate, tetramino)){
-		for(j = 0; j<tetramino.points.length; j++) {
-			x = tetramino.points[j].x - tetramino.pivot.x;
-			y = tetramino.points[j].y - tetramino.pivot.y;
-			newX = Translate(tetramino.points[j]).x;
-			newY = Translate(tetramino.points[j]).y;
-			if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
-				tetramino.points[j].x = newX;
-				tetramino.points[j].y = newY;
-
-			}
-		}
-		invalid = true;
-		draw();
-	}
-}
-
-function checkCollision(Translation, tetramino){
-	var x;
-	var y;
-	for(j = 0; j<tetramino.points.length; j++) {
-		x = tetramino.points[j].x;
-		y = tetramino.points[j].y;
-		newX = Translation(tetramino.points[j]).x;
-		newY = Translation(tetramino.points[j]).y;
-		if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
-			return true;
-		}
-	}
-	return false;
-
-}

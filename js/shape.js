@@ -1,7 +1,6 @@
 function Shape(type, colourScheme){
 	this.points = [];
 	this.initialOffset = 3;
-	var self = this;
 	this.colourScheme = {
 		'Standard': {
 			'O': '#FFF000',
@@ -68,7 +67,7 @@ function Shape(type, colourScheme){
 	};
 
 	this.points = blockPoints[type];
-	
+
 	switch(type){
 		case 'O':
 			this.pivot = new Point(0.5, 0.5);
@@ -87,6 +86,78 @@ function Shape(type, colourScheme){
 			this.points[j].draw();
 		}
 	};
+
+
+	this.gravity = function(){
+		for(var j = 0; j<this.points.length; j++) {
+			this.points[j].gravity();
+		}
+		this.pivot.gravity();
+	};
+
+	this.move = function(direction){
+
+		var bounds = (direction === "left") ? 0 : 9;
+		var xTranslation = (direction === "left") ? -1 : 1;
+		
+		var Translate = function(point){
+			return {
+				x: point.x + xTranslation,
+				y: point.y
+			};
+		};
+
+		if(!checkCollision(Translate, this.points)){
+			for(j = 0; j<this.points.length; j++) {
+				this.points[j].x += xTranslation;
+			}
+			this.pivot.x += xTranslation;
+
+			invalid = true;
+		}
+
+	};
+
+
+	this.rotate = function(direction){
+
+		var change = (direction === "ccw" ? 1 : -1);
+		var self = this;
+		var Translate = function(point){
+			return{
+				x: (point.y - self.pivot.y) * change + self.pivot.x,
+				y: (point.x - self.pivot.x) * -change + self.pivot.y
+			};
+		};
+
+		if(!checkCollision(Translate, this.points)){
+			for(j = 0; j<this.points.length; j++) {
+				var afterRotation = Translate(this.points[j]);
+				this.points[j].x = afterRotation.x;
+				this.points[j].y = afterRotation.y;
+
+			}
+			invalid = true;
+		}
+	};
+
+	var checkCollision = function(Translation, points){
+		var x;
+		var y;
+		for(j = 0; j<points.length; j++) {
+			point = points[j];
+			newX = Translation(point).x;
+			newY = Translation(point).y;
+			if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
+				console.log('collision');
+				return true;
+
+			}
+		}
+		return false;
+
+	};
+
 
 	return this;
 }
