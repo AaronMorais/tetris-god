@@ -6,9 +6,9 @@
         <script src="js/shape.js"></script>
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="js/point.js"></script>
-        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script type="text/javascript">
-			var socket = io.connect("http://localhost", {port: 8080});
+			var socket = io.connect(window.location.hostname);
 		    socket.on('connect', function () {
 		        socket.send('A client connected.');
 		    });
