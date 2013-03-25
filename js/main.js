@@ -68,6 +68,7 @@ function checkMoving() {
 				x = shape.points[k].x;
 				y = shape.points[k].y;
 				gridPoints[x][y] = shape.points[k];
+				shape = null;
 			}
 
 			if(isGameOver()) {
@@ -112,17 +113,19 @@ function checkRow() {
 			}
 			invalid = true;
 			draw();
+			i--;
 		}
 	}
 }
 
 function gravity() {
 	if(!checkMoving()) { return; }
-	for(var j = 0; j<shape.points.length; j++) {
-		shape.points[j].gravity();
+	if(shape) {
+		for(var j = 0; j<shape.points.length; j++) {
+			shape.points[j].gravity();
+		}
+		shape.pivot.gravity();
 	}
-	shape.pivot.gravity();
-
 	invalid = true;
 }
 
