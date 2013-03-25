@@ -148,14 +148,19 @@ function checkUserInput(){
 				move("left", tetramino);
 				break;
 			case(38)://up
-				rotate(tetramino);
+				rotate('cw', tetramino);
 				break;
 			case(39)://right
 				move("right", tetramino);
 				break;
 			case(40)://down
 				gravity();
-
+				gravity();
+				break;
+			case(18): //option
+				rotate('ccw', tetramino);
+				break;
+			case(32)://spacebar
 				break;
 		}
 	});
@@ -201,12 +206,13 @@ function checkCollision(Translation, tetramino){
 
 }
 
-function rotate(tetramino){
+function rotate(direction,tetramino){
 
+	var change = (direction === "ccw" ? 1 : -1);
 	var Translate = function(point){
 		return{
-			x: (point.y - tetramino.pivot.y) * -1 + tetramino.pivot.x,
-			y: point.x - tetramino.pivot.x + tetramino.pivot.y
+			x: (point.y - tetramino.pivot.y) * change + tetramino.pivot.x,
+			y: (point.x - tetramino.pivot.x) * -change + tetramino.pivot.y
 		};
 	};
 
@@ -214,8 +220,8 @@ function rotate(tetramino){
 		for(j = 0; j<tetramino.points.length; j++) {
 			x = tetramino.points[j].x - tetramino.pivot.x;
 			y = tetramino.points[j].y - tetramino.pivot.y;
-			newX = y * -1 + tetramino.pivot.x;
-			newY = x + tetramino.pivot.y;
+			newX = Translate(tetramino.points[j]).x;
+			newY = Translate(tetramino.points[j]).y;
 			if(newX >=0 && newX < 10 && !gridPoints[newX][newY]){
 				tetramino.points[j].x = newX;
 				tetramino.points[j].y = newY;
