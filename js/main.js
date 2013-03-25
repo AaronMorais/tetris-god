@@ -209,21 +209,6 @@ function move(direction, tetramino){
 
 }
 
-function checkCollision(Translation, tetramino){
-	var x;
-	var y;
-	for(j = 0; j<tetramino.points.length; j++) {
-		x = tetramino.points[j].x;
-		y = tetramino.points[j].y;
-		newX = Translation(tetramino.points[j]).x;
-		newY = Translation(tetramino.points[j]).y;
-		if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
-			return true;
-		}
-	}
-	return false;
-
-}
 
 function rotate(direction,tetramino){
 
@@ -252,3 +237,18 @@ function rotate(direction,tetramino){
 	}
 }
 
+function checkCollision(Translation, tetramino){
+	var x;
+	var y;
+	for(j = 0; j<tetramino.points.length; j++) {
+		x = tetramino.points[j].x;
+		y = tetramino.points[j].y;
+		newX = Translation(tetramino.points[j]).x;
+		newY = Translation(tetramino.points[j]).y;
+		if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
+			return true;
+		}
+	}
+	return false;
+
+}

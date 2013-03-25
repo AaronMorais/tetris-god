@@ -7,6 +7,7 @@
         <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="js/point.js"></script>
         <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
         <script type="text/javascript">
 			var socket = io.connect(window.location.hostname);
 		    socket.on('connect', function () {
@@ -25,16 +26,6 @@
         		console.log('disconnected');
             });
         </script>
-        <style type="text/css">
-        	#canvas-container {
-        		width: 100%;
-        		text-align: center;
-        	}
-        	#canvas {
-        		border: 1px solid black;
-        		display: inline;
-        	}
-        </style>
     </head>
     <body onload='init()'>
     	<div id="canvas-container">

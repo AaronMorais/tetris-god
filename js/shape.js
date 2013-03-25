@@ -55,57 +55,31 @@ function Shape(type, colourScheme){
 	}
 
 	this.colour = this.colourScheme[colourScheme][type];
+
+
+	var blockPoints = {
+		'O': [new Point(0,0), new Point(0,1), new Point(1,0), new Point(1,1)],
+		'L': [new Point(0,1), new Point(1,1), new Point(2,0), new Point(2,1)],
+		'J': [new Point(0,0), new Point(0,1), new Point(1,1), new Point(2,1)],
+		'S': [new Point(1,0), new Point(2,0), new Point(0,1), new Point(1,1)],
+		'Z': [new Point(0,0), new Point(1,0), new Point(1,1), new Point(2,1)],
+		'I': [new Point(0,1), new Point(1,1), new Point(2,1), new Point(3,1)],
+		'T': [new Point(1,1), new Point(0,1), new Point(2,1), new Point(1,0)]
+	};
+
+	this.points = blockPoints[type];
+	
 	switch(type){
 		case 'O':
-			this.points.push(new Point(0,0));
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(1,0));
-			this.points.push(new Point(1,1));
 			this.pivot = new Point(0.5, 0.5);
 			this.initialOffset = 4;
 			break;
-		case 'L':
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(1,1));
-			this.points.push(new Point(2,0));
-			this.points.push(new Point(2,1));
-			this.pivot = new Point(1,1);
-			break;
-		case 'J':
-			this.points.push(new Point(0,0));
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(1,1));
-			this.points.push(new Point(2,1));
-			this.pivot = new Point(1,1);
-			break;
-		case 'S':
-			this.points.push(new Point(1,0));
-			this.points.push(new Point(2,0));
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(1,1));
-			this.pivot = new Point(1,1);
-			break;
-		case 'Z':
-			this.points.push(new Point(0,0));
-			this.points.push(new Point(1,0));
-			this.points.push(new Point(1,1));
-			this.points.push(new Point(2,1));
-			this.pivot = new Point(1,1);
-			break;
 		case 'I':
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(1,1));
-			this.points.push(new Point(2,1));
-			this.points.push(new Point(3,1));
 			this.pivot = new Point(1.5,1.5);
 			break;
-		case 'T':
-			this.points.push(new Point(1,1));
-			this.points.push(new Point(0,1));
-			this.points.push(new Point(2,1));
-			this.points.push(new Point(1,0));
+		default :
 			this.pivot = new Point(1,1);
-			break;
+
 	}
 
 	this.draw  = function() {
