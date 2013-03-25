@@ -22,15 +22,22 @@
             });
         </script>
         <style type="text/css">
+        	#canvas-container {
+        		width: 100%;
+        		text-align: center;
+        	}
         	#canvas {
         		border: 1px solid black;
+        		display: inline;
         	}
         </style>
     </head>
     <body onload='init()'>
-   		<canvas id="canvas" width="300" height="600">
-    		This text is displayed if your browser does not support HTML5 Canvas.
-   		</canvas>
-   		<p id="type"></p>
+    	<div id="canvas-container">
+	   		<canvas id="canvas" width="300" height="600">
+	    		This text is displayed if your browser does not support HTML5 Canvas.
+	   		</canvas>
+	   		<p id="type"></p>
+	   	</div>
     </body>
 </html>
