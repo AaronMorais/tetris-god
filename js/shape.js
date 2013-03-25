@@ -1,8 +1,20 @@
-function Shape(type){
+function Shape(type, colourScheme){
 	this.points = [];
 	this.initialOffset = 3;
+	this.colourScheme = {
+		'standard': {
+			'O': '#FFF000',
+			'L': '#FF9900',
+			'J': '#0000FF',
+			'S': '#00FF00',
+			'Z': '#FF0000',
+			'I': '#66FFFF',
+			'T': '#990099'
+		}
+	};
+
+	this.colour = this.colourScheme[colourScheme ? colourScheme : 'standard'][type];
 	switch(type){
-		
 		case 'O':
 			this.points.push(new Point(0,0));
 			this.points.push(new Point(0,1));
