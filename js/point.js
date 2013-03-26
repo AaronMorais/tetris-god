@@ -1,5 +1,4 @@
 function Point(x,y) {
-	var blocksize = 30;
 	this.x = x;
 	this.y = y;
 	this.w = blocksize;

@@ -1,4 +1,6 @@
 function Shape(type, colourScheme){
+
+
 	this.points = [];
 	this.initialOffset = 3;
 	this.colourScheme = {
@@ -85,21 +87,29 @@ function Shape(type, colourScheme){
 		for(j = 0; j<this.points.length; j++) {
 			this.points[j].draw();
 		}
+		this.ghost.draw();
 	};
 
 
 	this.gravity = function(){
 		for(var j = 0; j<this.points.length; j++) {
 			this.points[j].gravity();
+			this.ghost.points[j].gravity();
 		}
 		this.pivot.gravity();
+
+		this.ghost.update();
 	};
 
-	this.move = function(direction){
+	this.move = function(direction, units){
 
 		var bounds = (direction === "left") ? 0 : 9;
 		var xTranslation = (direction === "left") ? -1 : 1;
 		
+		if(units){
+			xTranslation *= units;
+		}
+
 		var Translate = function(point){
 			return {
 				x: point.x + xTranslation,
@@ -110,8 +120,11 @@ function Shape(type, colourScheme){
 		if(!checkCollision(Translate, this.points)){
 			for(j = 0; j<this.points.length; j++) {
 				this.points[j].x += xTranslation;
+				this.ghost.points[j].x += xTranslation;
 			}
 			this.pivot.x += xTranslation;
+
+			this.ghost.update();
 
 			invalid = true;
 		}
@@ -133,10 +146,14 @@ function Shape(type, colourScheme){
 		if(!checkCollision(Translate, this.points)){
 			for(j = 0; j<this.points.length; j++) {
 				var afterRotation = Translate(this.points[j]);
+				this.ghost.points[j].x = afterRotation.x;
+				this.ghost.points[j].y = afterRotation.y;
 				this.points[j].x = afterRotation.x;
 				this.points[j].y = afterRotation.y;
 
 			}
+
+			this.ghost.update();
 			invalid = true;
 		}
 	};
@@ -157,6 +174,10 @@ function Shape(type, colourScheme){
 		return false;
 
 	};
+
+
+
+	this.ghost = new Ghost(this);
 
 
 	return this;

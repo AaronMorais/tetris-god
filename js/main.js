@@ -1,17 +1,18 @@
 var ctx;
 var invalid = false;
-var shape, ghost;
+var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
 var nextType;
 var colourScheme = "Standard";
+var blocksize = 30;
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	setNext();
-	createShape();
 	createGrid();
+	createShape();
 	setInterval(draw, 100);
 	setInterval(gravity, 1000);
 	checkUserInput();
@@ -33,11 +34,9 @@ function createGrid() {
 function createShape() {
 	shape = new Shape(nextType, colourScheme);
 	for(j = 0; j<shape.points.length; j++) {
-		shape.points[j].x += shape.initialOffset;
 		shape.points[j].fill = shape.colour;
 	}
-	shape.pivot.x += shape.initialOffset;
-	//ghost = new Ghost(shape);
+	shape.move("right", shape.initialOffset);
 	setNext();
 }
 
