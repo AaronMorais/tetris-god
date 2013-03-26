@@ -4,6 +4,8 @@ function Ghost(shape){
 
 	var pointDrawOverride = function(){
 		if(this.y < 2) { return;}
+   		
+   		ctx.beginPath();
 		ctx.strokeStyle = this.fill;
 		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, this.w, this.h);
 		ctx.stroke();
