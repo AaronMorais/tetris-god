@@ -3,12 +3,13 @@ function Point(x,y) {
 	this.y = y;
 	this.w = blocksize;
 	this.h = blocksize;
-	this.fill = '#000FF';
+	this.fill = '#0000FF';
 
-	this.draw = function() {
+	this.draw = function(location) {
+		context = location ? location : ctx;
 		if(this.y < 2) { return;}
-		ctx.fillStyle = this.fill;
-		ctx.fillRect(this.x*blocksize, (this.y-2)*blocksize, this.w, this.h);
+		context.fillStyle = this.fill;
+		context.fillRect(this.x*blocksize, (this.y-2)*blocksize, this.w, this.h);
 	};
 
 	this.gravity = function() {

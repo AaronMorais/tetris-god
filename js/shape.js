@@ -2,7 +2,6 @@ function Shape(type, colourScheme){
 
 
 	this.points = [];
-	this.initialOffset = 3;
 	this.colourScheme = {
 		'Standard': {
 			'O': '#FFF000',
@@ -77,11 +76,14 @@ function Shape(type, colourScheme){
 			break;
 		case 'I':
 			this.pivot = new Point(1.5,1.5);
+			this.initialOffset = 3;
 			break;
 		default :
 			this.pivot = new Point(1,1);
+			this.initialOffset = 3;
 
 	}
+
 
 	this.draw  = function() {
 		for(j = 0; j<this.points.length; j++) {
@@ -90,6 +92,16 @@ function Shape(type, colourScheme){
 		this.ghost.draw();
 	};
 
+	this.preview = function(){
+		ctxNext.clearRect(0,0,120,120);
+		ctxNext.beginPath();
+		this.points.fill = this.colour;
+		for(j = 0; j<this.points.length; j++) {
+			this.points[j].x += (this.initialOffset - 3);
+			this.points[j].y += 3;
+			this.points[j].draw(ctxNext);
+		}
+	};
 
 	this.gravity = function(){
 		for(var j = 0; j<this.points.length; j++) {
@@ -103,7 +115,6 @@ function Shape(type, colourScheme){
 
 	this.move = function(direction, units){
 
-		var bounds = (direction === "left") ? 0 : 9;
 		var xTranslation = (direction === "left") ? -1 : 1;
 		
 		if(units){
@@ -166,7 +177,6 @@ function Shape(type, colourScheme){
 			newX = Translation(point).x;
 			newY = Translation(point).y;
 			if(newX < 0 || newX > 9 || newY > 19 || gridPoints[newX][newY]){
-				console.log('collision');
 				return true;
 
 			}

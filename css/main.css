@@ -3,7 +3,7 @@
 	text-align: center;
 }
 
-#canvas {
+.canvas {
 	border: 1px solid black;
 	display: inline;
 }
