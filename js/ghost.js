@@ -17,12 +17,11 @@ function Ghost(shape){
 
 	}
 
-	var self = this;
 	this.update = function(){
 		var canLand = true;
 		var shift = 0;
 		for(var i = 0; i<21 && canLand; i++){
-			for(j = 0; j<self.points.length; j++){
+			for(j = 0; j<this.points.length; j++){
 				if(gridPoints[shape.points[j].x][shape.points[j].y + i] || shape.points[j].y + i > 21){
 					canLand = false;
 					shift = i - 1;
@@ -30,9 +29,9 @@ function Ghost(shape){
 				}
 			}
 		}
-		if(shift > 1){
+		if(shift >0){
 			for(var k = 0; k<shape.points.length; k++) {
-				self.points[k].y = shape.points[k].y + shift;
+				this.points[k].y = shape.points[k].y + shift;
 			}
 			this.draw();
 		}
