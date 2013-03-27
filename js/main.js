@@ -136,8 +136,22 @@ function recursiveGravity() {
 	}
 }
 
+$(window).resize(function() {
+	invalid = true;
+	draw();
+});
+
 function draw() {
 	if(invalid) {
+		width = window.innerWidth;
+	  	height = window.innerHeight - 100;
+		width = height/2;
+
+	 	ctx.canvas.width  = width;
+	  	ctx.canvas.height = height;
+
+	  	blocksize = ctx.canvas.width/10;
+
 		ctx.clearRect(0,0, 400, 800);
 		if(shape) {
 			shape.draw();

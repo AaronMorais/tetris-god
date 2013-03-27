@@ -7,7 +7,7 @@ function Ghost(shape){
    		
    		ctx.beginPath();
 		ctx.strokeStyle = this.fill;
-		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, this.w, this.h);
+		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, blocksize, blocksize);
 		ctx.stroke();
 	};
 
