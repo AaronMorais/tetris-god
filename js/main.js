@@ -1,4 +1,4 @@
-var ctx;
+var ctx, ctxNext;
 var invalid = false;
 var shape;
 var shapeTypes = ['O','L','J','S','Z','I','T'];
@@ -10,6 +10,8 @@ var blocksize = 30;
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
+	canvasNext = document.getElementById('next-preview');
+	ctxNext = canvasNext.getContext('2d');
 	setNext();
 	createGrid();
 	createShape();
@@ -44,6 +46,8 @@ function setNext() {
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
 	nextType = type;
 	$('#type').text("Next Piece is: " + nextType);
+	var nextShape = new Shape(nextType, colourScheme);
+	nextShape.preview();
 }
 
 function isGameOver() {
@@ -152,7 +156,8 @@ function draw() {
 
 	  	blocksize = ctx.canvas.width/10;
 
-		ctx.clearRect(0,0, 400, 800);
+		ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+
 		if(shape) {
 			shape.draw();
 		}

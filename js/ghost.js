@@ -4,8 +4,7 @@ function Ghost(shape){
 
 	var pointDrawOverride = function(){
 		if(this.y < 2) { return;}
-   		
-   		ctx.beginPath();
+		ctx.beginPath();
 		ctx.strokeStyle = this.fill;
 		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, blocksize, blocksize);
 		ctx.stroke();
@@ -31,12 +30,12 @@ function Ghost(shape){
 				}
 			}
 		}
-		if(shift){
+		if(shift > 1){
 			for(var k = 0; k<shape.points.length; k++) {
 				self.points[k].y = shape.points[k].y + shift;
 			}
+			this.draw();
 		}
-		this.draw();
 	};
 
 	this.draw  = function() {
