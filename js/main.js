@@ -9,6 +9,7 @@ var blocksize = 30;
 var gravitySpeed = 1000;
 var gravityTimer;
 var score = [0,40,100,300,1200];
+var currentScore = 0; 
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -142,8 +143,8 @@ function checkRow() {
 }
 
 function increaseScore(linesCleared){
-	var current = Number($("#score").text());
-	$("#score").text(current + score[linesCleared]);
+	currentScore += score[linesCleared];
+	$("#score").text("Score: " + currentScore);
 }
 
 function gravity() {
@@ -166,7 +167,7 @@ function draw() {
 	  	drawNextShape();
 
 		width = window.innerWidth;
-	  	height = window.innerHeight - 100;
+	  	height = window.innerHeight - 130;
 		width = height/2;
 
 	 	ctx.canvas.width  = width;
