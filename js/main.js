@@ -167,6 +167,7 @@ function draw() {
 	}
 }
 
+var gravityAcceleration = 2;
 function checkUserInput(){
 	$(window).keydown(function(e) {
 		if(!shape) { return;}
@@ -182,8 +183,10 @@ function checkUserInput(){
 				shape.move("right");
 				break;
 			case(40)://down
-				gravity();
-				gravity();
+				for(var i=0; i<gravityAcceleration; i++) {
+					gravity();
+				}
+				gravityAcceleration *=10;
 				break;
 			case(18): //option
 				shape.rotate('ccw');
@@ -193,6 +196,15 @@ function checkUserInput(){
 				break;
 		}
 		draw();
+	});
+		$(window).keydown(function(e) {
+			if(!shape) { return;}
+			var key = e.keyCode;
+			switch(key){
+				case(40)://down
+					gravityAcceleration = 2;
+				break;
+			}
 	});
 }
 
