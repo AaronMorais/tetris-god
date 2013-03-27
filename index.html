@@ -14,6 +14,9 @@
                 ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
                 ctxNext.canvas.width = blocksize*4;
                 ctxNext.canvas.height = blocksize*4;
+                ctxHold.clearRect(0,0,ctxNext.width,ctxNext.height);
+                ctxHold.canvas.width = blocksize*4;
+                ctxHold.canvas.height = blocksize*4;
 
                 invalid = true;
                 draw();

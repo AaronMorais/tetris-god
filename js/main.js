@@ -10,8 +10,7 @@ var gravitySpeed = 1000;
 var gravityTimer;
 var score = [0,40,100,300,1200];
 var currentScore = 0;
-
-var canHold = true;
+var canHold;
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -211,8 +210,7 @@ function hold(){
 			currentNext = nextType;
 			nextType = inHold.type;
 		}
-		inHold = shape;
-		inHold.resetPoints();
+		inHold = new Shape(shape.type);
 		inHold.previewAs(ctxHold);
 		createShape();
 		setNext(currentNext);
