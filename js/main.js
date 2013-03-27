@@ -11,6 +11,8 @@ var gravityTimer;
 var score = [0,40,100,300,1200];
 var currentScore = 0;
 
+var canHold = true;
+
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
@@ -47,6 +49,7 @@ function createShape() {
 	}
 	shape.move("right", shape.initialOffset);
 	setNext();
+	canHold = true;
 }
 
 function setGravity() {
@@ -55,9 +58,8 @@ function setGravity() {
 	gravityTimer = setInterval(gravity, gravitySpeed);
 }
 
-function setNext() {
-	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
-	nextType = type;
+function setNext(type) {
+	nextType = type ? type : (shapeTypes[Math.floor(Math.random() * shapeTypes.length)]);
 	$('#type').text("Next Piece is: " + nextType);
 	drawNextShape();
 }
@@ -203,13 +205,19 @@ function draw() {
 
 var inHold;
 function hold(){
-	if(inHold){
-		nextType = inHold.type;
+	var currentNext;
+	if(canHold){
+		if(inHold){
+			currentNext = nextType;
+			nextType = inHold.type;
+		}
+		inHold = shape;
+		inHold.resetPoints();
+		inHold.previewAs(ctxHold);
+		createShape();
+		setNext(currentNext);
+		canHold = false;
 	}
-	inHold = shape;
-	inHold.resetPoints();
-	inHold.previewAs(ctxHold);
-	createShape();
 }
 
 

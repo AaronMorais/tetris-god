@@ -85,6 +85,7 @@ function Shape(type, colourScheme){
 	}
 
 	this.resetPoints = function(){
+		this.points = null;
 		this.points = blockPoints[this.type];
 	};
 
