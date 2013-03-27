@@ -140,9 +140,24 @@ function recursiveGravity() {
 	}
 }
 
+$(window).resize(function() {
+	invalid = true;
+	draw();
+});
+
 function draw() {
 	if(invalid) {
-		ctx.clearRect(0,0, 300, 600);
+		width = window.innerWidth;
+	  	height = window.innerHeight - 100;
+		width = height/2;
+
+	 	ctx.canvas.width  = width;
+	  	ctx.canvas.height = height;
+
+	  	blocksize = ctx.canvas.width/10;
+
+		ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+
 		if(shape) {
 			shape.draw();
 		}
@@ -157,6 +172,7 @@ function draw() {
 	}
 }
 
+var gravityAcceleration = 2;
 function checkUserInput(){
 	$(window).keydown(function(e) {
 		if(!shape) { return;}
@@ -172,8 +188,10 @@ function checkUserInput(){
 				shape.move("right");
 				break;
 			case(40)://down
-				gravity();
-				gravity();
+				for(var i=0; i<gravityAcceleration; i++) {
+					gravity();
+				}
+				gravityAcceleration *=10;
 				break;
 			case(18): //option
 				shape.rotate('ccw');
@@ -183,6 +201,15 @@ function checkUserInput(){
 				break;
 		}
 		draw();
+	});
+		$(window).keydown(function(e) {
+			if(!shape) { return;}
+			var key = e.keyCode;
+			switch(key){
+				case(40)://down
+					gravityAcceleration = 2;
+				break;
+			}
 	});
 }
 

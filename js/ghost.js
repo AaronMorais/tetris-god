@@ -6,7 +6,7 @@ function Ghost(shape){
 		if(this.y < 2) { return;}
 		ctx.beginPath();
 		ctx.strokeStyle = this.fill;
-		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, this.w, this.h);
+		ctx.rect(this.x*blocksize, (this.y-2)*blocksize, blocksize, blocksize);
 		ctx.stroke();
 	};
 
