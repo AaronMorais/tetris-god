@@ -10,6 +10,15 @@
         <script src="/socket.io/socket.io.js"></script>
         <link rel="stylesheet" type="text/css" href="css/main.css">
         <script type="text/javascript">
+            $(window).resize(function() {
+                ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
+                ctxNext.canvas.width = blocksize*4;
+                ctxNext.canvas.height = blocksize*4;
+
+                invalid = true;
+                draw();
+            });
+
 			var socket = io.connect(window.location.hostname);
 		    socket.on('connect', function () {
 		        socket.send('A client connected.');
@@ -19,6 +28,19 @@
         		nextType = msg;
                 invalid = true;
     			$('#type').text("GOD SAYS: Next Piece is: " + nextType);
+            });
+            socket.on('newSpeed', function (msg) {
+                console.log(msg);
+                console.log(gravitySpeed);
+                if(msg === "increase") {
+                    gravitySpeed -=50;
+                    if(gravitySpeed < 10) {
+                        gravitySpeed = 10;
+                    }
+                } else if(msg === "decrease") {
+                    gravitySpeed +=50;
+                }
+                setGravity();
             });
             socket.on('colourScheme', function (msg) {
 		    	console.log(msg);

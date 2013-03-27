@@ -13,6 +13,10 @@ socket.on('connection', function (socket) {
 		console.log(data);
         socket.broadcast.emit("nextType",data);
     });
+    socket.on('setNewSpeed', function (data) {
+		console.log(data);
+        socket.broadcast.emit("newSpeed",data);
+    });
     socket.on('setColour', function (data) {
 		console.log(data);
         socket.broadcast.emit("colourScheme",data);

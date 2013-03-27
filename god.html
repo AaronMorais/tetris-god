@@ -32,6 +32,8 @@
         <button type="button" id="Dull">Dull</button>
         </br>
         </br>
+        <button type="button" id="Increase">Increase</button>
+        <button type="button" id="Decrease">Decrease</button>
         <a href="/index.html">Play as a mortal</a>
     </body>
     <script>
@@ -67,6 +69,12 @@
     });
     $("#Dull").click(function() {
         socket.emit("setColour", "Dull");
+    });
+    $("#Increase").click(function() {
+        socket.emit("setNewSpeed", "increase");
+    });
+    $("#Decrease").click(function() {
+        socket.emit("setNewSpeed", "decrease");
     });
     </script>
     </html>

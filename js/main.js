@@ -6,6 +6,8 @@ var gridPoints = [];
 var nextType;
 var colourScheme = "Standard";
 var blocksize = 30;
+var gravitySpeed = 1000;
+var gravityTimer;
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -16,7 +18,7 @@ function init() {
 	createGrid();
 	createShape();
 	setInterval(draw, 100);
-	setInterval(gravity, 1000);
+	setGravity();
 	checkUserInput();
 }
 
@@ -40,6 +42,12 @@ function createShape() {
 	}
 	shape.move("right", shape.initialOffset);
 	setNext();
+}
+
+function setGravity() {
+	gravity();
+	clearInterval(gravityTimer);
+	gravityTimer = setInterval(gravity, gravitySpeed);
 }
 
 function setNext() {
@@ -143,15 +151,6 @@ function recursiveGravity() {
 		recursiveGravity();
 	}
 }
-
-$(window).resize(function() {
-	ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
-	ctxNext.canvas.width = blocksize*4;
-  	ctxNext.canvas.height = blocksize*4;
-
-	invalid = true;
-	draw();
-});
 
 function draw() {
 	if(invalid) {
