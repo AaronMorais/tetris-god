@@ -95,8 +95,8 @@ function Shape(type, colourScheme){
 	this.preview = function(){
 		ctxNext.clearRect(0, 0, canvas.width, canvas.height);
 		ctxNext.beginPath();
-		this.points.fill = this.colour;
 		for(j = 0; j<this.points.length; j++) {
+			this.points[j].fill = this.colour;
 			this.points[j].x += (this.initialOffset - 3);
 			this.points[j].y += 3;
 			this.points[j].draw(ctxNext);
