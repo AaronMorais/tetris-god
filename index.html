@@ -17,6 +17,7 @@
 		    socket.on('nextType', function (msg) {
 		    	console.log(msg);
         		nextType = msg;
+                invalid = true;
     			$('#type').text("GOD SAYS: Next Piece is: " + nextType);
             });
             socket.on('colourScheme', function (msg) {

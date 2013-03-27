@@ -93,7 +93,7 @@ function Shape(type, colourScheme){
 	};
 
 	this.preview = function(){
-		ctxNext.clearRect(0,0,120,120);
+		ctxNext.clearRect(0, 0, canvas.width, canvas.height);
 		ctxNext.beginPath();
 		this.points.fill = this.colour;
 		for(j = 0; j<this.points.length; j++) {

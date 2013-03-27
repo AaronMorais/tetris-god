@@ -46,6 +46,10 @@ function setNext() {
 	var type = shapeTypes[Math.floor(Math.random() * shapeTypes.length)];
 	nextType = type;
 	$('#type').text("Next Piece is: " + nextType);
+	drawNextShape();
+}
+
+function drawNextShape() {
 	var nextShape = new Shape(nextType, colourScheme);
 	nextShape.preview();
 }
@@ -141,12 +145,18 @@ function recursiveGravity() {
 }
 
 $(window).resize(function() {
+	ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
+	ctxNext.canvas.width = blocksize*4;
+  	ctxNext.canvas.height = blocksize*4;
+
 	invalid = true;
 	draw();
 });
 
 function draw() {
 	if(invalid) {
+	  	drawNextShape();
+
 		width = window.innerWidth;
 	  	height = window.innerHeight - 100;
 		width = height/2;
