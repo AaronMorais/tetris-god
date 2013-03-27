@@ -22,6 +22,7 @@ function init() {
 	setInterval(draw, 100);
 	setGravity();
 	checkUserInput();
+	resizePreview();
 }
 
 function createGrid() {
@@ -62,6 +63,12 @@ function setNext() {
 function drawNextShape() {
 	var nextShape = new Shape(nextType, colourScheme);
 	nextShape.preview();
+}
+
+function resizePreview() {
+    ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
+    ctxNext.canvas.width = blocksize*4;
+    ctxNext.canvas.height = blocksize*4;
 }
 
 function isGameOver() {
