@@ -6,6 +6,7 @@ var gridPoints = [];
 var nextType;
 var colourScheme = "Standard";
 var blocksize = 30;
+var score = [0,40,100,300,1200];
 
 function init() {
 	canvas = document.getElementById('canvas');
@@ -95,6 +96,7 @@ function checkMoving() {
 }
 
 function checkRow() {
+	var linesCleared = 0;
 	for(var i=0; i<gridPoints[0].length; i++) {
 		//check if row is complete and should be removed
 		var complete = true;
@@ -123,10 +125,17 @@ function checkRow() {
 				}
 			}
 			invalid = true;
+			linesCleared++;
 			draw();
 			i--;
 		}
 	}
+	increaseScore(linesCleared);
+}
+
+function increaseScore(linesCleared){
+	var current = Number($("#score").text());
+	$("#score").text(current + score[linesCleared]);
 }
 
 function gravity() {
