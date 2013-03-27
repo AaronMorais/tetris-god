@@ -89,7 +89,7 @@ function Shape(type, colourScheme){
 		for(j = 0; j<this.points.length; j++) {
 			this.points[j].draw();
 		}
-		this.ghost.draw();
+		this.ghost.update();
 	};
 
 	this.preview = function(){
