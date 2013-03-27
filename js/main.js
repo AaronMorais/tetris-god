@@ -196,6 +196,9 @@ function checkUserInput(){
 			case(18): //option
 				shape.rotate('ccw');
 				break;
+			case(17): //control
+				shape.rotate('ccw');
+				break;
 			case(32)://spacebar
 				recursiveGravity();
 				break;
