@@ -9,20 +9,22 @@ var blocksize = 30;
 var gravitySpeed = 1000;
 var gravityTimer;
 var score = [0,40,100,300,1200];
-var currentScore = 0; 
+var currentScore = 0;
 
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
 	canvasNext = document.getElementById('next-preview');
 	ctxNext = canvasNext.getContext('2d');
+	ctxHold = document.getElementById('hold-preview').getContext('2d');
 	setNext();
 	createGrid();
 	createShape();
 	setInterval(draw, 100);
 	setGravity();
 	checkUserInput();
-	resizePreview();
+	resizePreview(ctxNext);
+	resizePreview(ctxHold);
 }
 
 function createGrid() {
@@ -62,13 +64,13 @@ function setNext() {
 
 function drawNextShape() {
 	var nextShape = new Shape(nextType, colourScheme);
-	nextShape.preview();
+	nextShape.previewAs(ctxNext);
 }
 
-function resizePreview() {
-    ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
-    ctxNext.canvas.width = blocksize*4;
-    ctxNext.canvas.height = blocksize*4;
+function resizePreview(view) {
+    view.clearRect(0,0,view.width,view.height);
+    view.canvas.width = blocksize*4;
+    view.canvas.height = blocksize*4;
 }
 
 function isGameOver() {
@@ -171,16 +173,16 @@ function recursiveGravity() {
 
 function draw() {
 	if(invalid) {
-	  	drawNextShape();
-
+		drawNextShape();
+		
 		width = window.innerWidth;
-	  	height = window.innerHeight - 130;
+		height = window.innerHeight - 130;
 		width = height/2;
+		
+		ctx.canvas.width  = width;
+		ctx.canvas.height = height;
 
-	 	ctx.canvas.width  = width;
-	  	ctx.canvas.height = height;
-
-	  	blocksize = ctx.canvas.width/10;
+		blocksize = ctx.canvas.width/10;
 
 		ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
 
@@ -197,6 +199,19 @@ function draw() {
 		invalid = false;
 	}
 }
+
+
+var inHold;
+function hold(){
+	if(inHold){
+		nextType = inHold.type;
+	}
+	inHold = shape;
+	inHold.resetPoints();
+	inHold.previewAs(ctxHold);
+	createShape();
+}
+
 
 var gravityAcceleration = 2;
 function checkUserInput(){
@@ -224,6 +239,9 @@ function checkUserInput(){
 				break;
 			case(17): //control
 				shape.rotate('ccw');
+				break;
+			case(16)://shift
+				hold();
 				break;
 			case(32)://spacebar
 				recursiveGravity();

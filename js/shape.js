@@ -1,6 +1,6 @@
 function Shape(type, colourScheme){
 
-
+	this.type = type;
 	this.points = [];
 	this.colourScheme = {
 		'Standard': {
@@ -54,7 +54,7 @@ function Shape(type, colourScheme){
 		return color;
 	}
 
-	this.colour = this.colourScheme[colourScheme][type];
+	this.colour = this.colourScheme[colourScheme][this.type];
 
 
 	var blockPoints = {
@@ -67,7 +67,7 @@ function Shape(type, colourScheme){
 		'T': [new Point(1,1), new Point(0,1), new Point(2,1), new Point(1,0)]
 	};
 
-	this.points = blockPoints[type];
+	this.points = blockPoints[this.type];
 
 	switch(type){
 		case 'O':
@@ -84,6 +84,9 @@ function Shape(type, colourScheme){
 
 	}
 
+	this.resetPoints = function(){
+		this.points = blockPoints[this.type];
+	};
 
 	this.draw  = function() {
 		for(j = 0; j<this.points.length; j++) {
@@ -92,14 +95,14 @@ function Shape(type, colourScheme){
 		this.ghost.update();
 	};
 
-	this.preview = function(){
-		ctxNext.clearRect(0, 0, canvas.width, canvas.height);
-		ctxNext.beginPath();
+	this.previewAs = function(view){
+		view.clearRect(0, 0, canvas.width, canvas.height);
+		view.beginPath();
 		for(j = 0; j<this.points.length; j++) {
 			this.points[j].fill = this.colour;
 			this.points[j].x += (this.initialOffset - 3);
 			this.points[j].y += 3;
-			this.points[j].draw(ctxNext);
+			this.points[j].draw(view);
 		}
 	};
 
