@@ -175,7 +175,7 @@ function recursiveGravity() {
 function draw() {
 	if(invalid) {
 		drawNextShape();
-		
+		drawHold();
 		width = window.innerWidth;
 		height = window.innerHeight - 130;
 		width = height/2;
@@ -211,13 +211,18 @@ function hold(){
 			nextType = inHold.type;
 		}
 		inHold = new Shape(shape.type);
-		inHold.previewAs(ctxHold);
+		drawHold();
 		createShape();
 		setNext(currentNext);
 		canHold = false;
 	}
 }
 
+function drawHold(){
+	if(inHold){
+		inHold.previewAs(ctxHold);
+	}
+}
 
 var gravityAcceleration = 2;
 function checkUserInput(){
