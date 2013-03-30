@@ -1,10 +1,30 @@
 var ctx, ctxNext;
 var invalid = false;
 var shape;
-var shapeTypes = ['O','L','J','S','Z','I','T'];
 var gridPoints = [];
 var nextType;
-var colourScheme = "Standard";
+var shapeTypes = ['O','L','J','S','Z','I','T'];
+var ShapeType = { 
+	'O' : 'O',
+	'L' : 'L',
+	'T' : 'T',
+	'J' : 'J',
+	'S' : 'S',
+	'Z' : 'Z',
+	'I' : 'I'
+};
+var Direction = {
+	'LEFT' : 'Left',
+	'RIGHT' : 'right',
+	'CW' : 'cw',
+	'CCW' : 'ccw'
+}
+var ColourScheme = { 'STANDARD': 'Standard', 
+            'DULL': 'Dull', 
+            'BLACK': 'Black', 
+            'RANDOM': 'Random'
+};
+var currentColourScheme = ColourScheme.STANDARD;
 var blocksize = 30;
 var gravitySpeed = 1000;
 var gravityTimer;
@@ -42,11 +62,11 @@ function createGrid() {
 }
 
 function createShape() {
-	shape = new Shape(nextType, colourScheme);
+	shape = new Shape(nextType, currentColourScheme);
 	for(j = 0; j<shape.points.length; j++) {
 		shape.points[j].fill = shape.colour;
 	}
-	shape.move("right", shape.initialOffset);
+	shape.move(Direction.RIGHT, shape.initialOffset);
 	setNext();
 	canHold = true;
 }
@@ -64,7 +84,7 @@ function setNext(type) {
 }
 
 function drawNextShape() {
-	var nextShape = new Shape(nextType, colourScheme);
+	var nextShape = new Shape(nextType, currentColourScheme);
 	nextShape.previewAs(ctxNext);
 }
 
@@ -224,37 +244,48 @@ function drawHold(){
 	}
 }
 
+var KeyCode = {
+	"LEFT" : 37,
+	"RIGHT" : 39,
+	"UP" : 38,
+	"DOWN" : 40,
+	"OPTION" : 18,
+	"CONTROL" : 17,
+	"SHIFT" : 16,
+	"SPACEBAR" : 32
+};
+
 var gravityAcceleration = 2;
 function checkUserInput(){
 	$(window).keydown(function(e) {
 		if(!shape) { return;}
 		var key = e.keyCode;
 		switch(key){
-			case(37)://left
-				shape.move("left");
+			case(KeyCode.LEFT):
+				shape.move(Direction.LEFT);
 				break;
-			case(38)://up
-				shape.rotate('cw');
+			case(KeyCode.UP):
+				shape.rotate(Direction.UP);
 				break;
-			case(39)://right
-				shape.move("right");
+			case(KeyCode.RIGHT):
+				shape.move(Direction.RIGHT);
 				break;
-			case(40)://down
+			case(KeyCode.DOWN):
 				for(var i=0; i<gravityAcceleration; i++) {
 					gravity();
 				}
 				gravityAcceleration *=10;
 				break;
-			case(18): //option
-				shape.rotate('ccw');
+			case(KeyCode.OPTION): 
+				shape.rotate(Direction.CCW);
 				break;
-			case(17): //control
-				shape.rotate('ccw');
+			case(KeyCode.CONTROL): 
+				shape.rotate(Direction.CCW);
 				break;
-			case(16)://shift
+			case(KeyCode.SHIFT):
 				hold();
 				break;
-			case(32)://spacebar
+			case(KeyCode.SPACEBAR):
 				recursiveGravity();
 				break;
 		}
@@ -264,7 +295,7 @@ function checkUserInput(){
 			if(!shape) { return;}
 			var key = e.keyCode;
 			switch(key){
-				case(40)://down
+				case(KeyCode.DOWN):
 					gravityAcceleration = 2;
 				break;
 			}

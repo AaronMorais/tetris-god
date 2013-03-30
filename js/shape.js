@@ -55,9 +55,8 @@ function Shape(type, colourScheme){
 	}
 
 
-	colourScheme = colourScheme ? colourScheme : 'Standard';
+	colourScheme = colourScheme ? colourScheme : ColourScheme.STANDARD;
 	this.colour = this.colourScheme[colourScheme][this.type];
-
 
 	var blockPoints = {
 		'O': [new Point(0,0), new Point(0,1), new Point(1,0), new Point(1,1)],
@@ -72,11 +71,11 @@ function Shape(type, colourScheme){
 	this.points = blockPoints[this.type].slice(0);
 
 	switch(type){
-		case 'O':
+		case ShapeType.O:
 			this.pivot = new Point(0.5, 0.5);
 			this.initialOffset = 4;
 			break;
-		case 'I':
+		case ShapeType.I:
 			this.pivot = new Point(1.5,1.5);
 			this.initialOffset = 3;
 			break;
@@ -118,7 +117,7 @@ function Shape(type, colourScheme){
 	};
 
 	this.move = function(direction, units){
-		var xTranslation = (direction === "left") ? -1 : 1;
+		var xTranslation = (direction === Direction.LEFT) ? -1 : 1;
 		if(units){
 			xTranslation *= units;
 		}
@@ -141,7 +140,7 @@ function Shape(type, colourScheme){
 
 
 	this.rotate = function(direction){
-		var change = (direction === "ccw" ? 1 : -1);
+		var change = (direction === Direction.CCW ? 1 : -1);
 		var self = this;
 		var Translate = function(point){
 			return{
