@@ -2,59 +2,17 @@
 <html>
     <head>
         <title>Tetris God</title>
-        <script src="js/main.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script src="js/shape.js"></script>
         <script src="js/point.js"></script>
         <script src="js/ghost.js"></script>
-        <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/main.css">
-        <script type="text/javascript">
-            $(window).resize(function() {
-                ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
-                ctxNext.canvas.width = blocksize*4;
-                ctxNext.canvas.height = blocksize*4;
-                ctxHold.clearRect(0,0,ctxNext.width,ctxNext.height);
-                ctxHold.canvas.width = blocksize*4;
-                ctxHold.canvas.height = blocksize*4;
-
-                invalid = true;
-                draw();
-            });
-
-			var socket = io.connect(window.location.hostname);
-		    socket.on('connect', function () {
-		        socket.send('A client connected.');
-		    });
-		    socket.on('nextType', function (msg) {
-		    	console.log(msg);
-        		nextType = msg;
-                invalid = true;
-    			$('#type').text("GOD SAYS: Next Piece is: " + nextType);
-            });
-            socket.on('newSpeed', function (msg) {
-                console.log(msg);
-                console.log(gravitySpeed);
-                if(msg === "increase") {
-                    gravitySpeed -=50;
-                    if(gravitySpeed < 10) {
-                        gravitySpeed = 10;
-                    }
-                } else if(msg === "decrease") {
-                    gravitySpeed +=50;
-                }
-                setGravity();
-            });
-            socket.on('colourScheme', function (msg) {
-		    	console.log(msg);
-        		colourScheme = msg;
-            });
-		    socket.on('disconnect', function () {
-        		console.log('disconnected');
-            });
-        </script>
+        <script src="js/humanClient.js"></script>
+        <script src="js/main.js"></script>
     </head>
-    <body onload='init()'>
+    <body>
     	<div id="canvas-container">
             <canvas class = "canvas" id="hold-preview" width = "120" height = "120"></canvas>
             <canvas id="canvas" class="canvas" width="300" height="600">

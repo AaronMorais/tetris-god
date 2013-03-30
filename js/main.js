@@ -32,6 +32,10 @@ var score = [0,40,100,300,1200];
 var currentScore = 0;
 var canHold;
 
+$(document).ready(function() {
+	init();
+});
+
 function init() {
 	canvas = document.getElementById('canvas');
 	ctx = canvas.getContext('2d');
@@ -46,6 +50,7 @@ function init() {
 	checkUserInput();
 	resizePreview(ctxNext);
 	resizePreview(ctxHold);
+	new HumanClient();
 }
 
 function createGrid() {
@@ -190,6 +195,18 @@ function recursiveGravity() {
 		recursiveGravity();
 	}
 }
+
+$(window).resize(function() {
+    ctxNext.clearRect(0,0,ctxNext.width,ctxNext.height);
+    ctxNext.canvas.width = blocksize*4;
+    ctxNext.canvas.height = blocksize*4;
+    ctxHold.clearRect(0,0,ctxNext.width,ctxNext.height);
+    ctxHold.canvas.width = blocksize*4;
+    ctxHold.canvas.height = blocksize*4;
+
+    invalid = true;
+    draw();
+});
 
 function draw() {
 	if(invalid) {
