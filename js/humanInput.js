@@ -29,7 +29,7 @@ function HumanInput(){
 				for(var i=0; i<gravityAcceleration; i++) {
 					gravity();
 				}
-				gravityAcceleration *=2;
+				gravityAcceleration +=1;
 				break;
 			case(KeyCode.OPTION): 
 				shape.rotate(Direction.CCW);
