@@ -9,7 +9,7 @@ var KeyCode = {
 	"SPACEBAR" : 32
 };
 
-var gravityAcceleration = 2;
+var gravityAcceleration = 1;
 
 function HumanInput(){
 	$(window).keydown(function(e) {
@@ -29,7 +29,7 @@ function HumanInput(){
 				for(var i=0; i<gravityAcceleration; i++) {
 					gravity();
 				}
-				gravityAcceleration *=10;
+				gravityAcceleration *=2;
 				break;
 			case(KeyCode.OPTION): 
 				shape.rotate(Direction.CCW);
@@ -46,7 +46,7 @@ function HumanInput(){
 		}
 		draw();
 	});
-		$(window).keydown(function(e) {
+	$(window).keyup(function(e) {
 			if(!shape) { return;}
 			var key = e.keyCode;
 			switch(key){
