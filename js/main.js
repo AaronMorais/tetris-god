@@ -72,7 +72,6 @@ function createShape() {
 }
 
 function setGravity() {
-	gravity();
 	clearInterval(gravityTimer);
 	gravityTimer = setInterval(gravity, gravitySpeed);
 }
