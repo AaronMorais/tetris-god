@@ -11,7 +11,7 @@ var KeyCode = {
 
 var gravityAcceleration = 2;
 
-function UserInput(){
+function HumanInput(){
 	$(window).keydown(function(e) {
 		if(!shape) { return;}
 		var key = e.keyCode;
