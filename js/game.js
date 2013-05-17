@@ -216,11 +216,10 @@ $(window).resize(function() {
 function draw() {
 	if(invalid) {
 		drawNextShape();
-		drawHold();
 		width = window.innerWidth;
 		height = window.innerHeight - 200;
 		width = height/2;
-		
+
 		ctx.canvas.width  = width;
 		ctx.canvas.height = height;
 
