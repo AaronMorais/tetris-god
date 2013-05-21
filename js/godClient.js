@@ -8,24 +8,31 @@ function GodClient() {
         });
         $("#O").click(function() {
 	        socket.emit("setNextType", "O");
+	        setNext("O");
 	    });
 	    $("#L").click(function() {
 	        socket.emit("setNextType", "L");
+	        setNext("L");
 	    });
 	    $("#J").click(function() {
 	        socket.emit("setNextType", "J");
+	        setNext("J");
 	    });
 	    $("#S").click(function() {
 	        socket.emit("setNextType", "S");
+	        setNext("S");
 	    });
 	    $("#Z").click(function() {
 	        socket.emit("setNextType", "Z");
+	        setNext("Z");
 	    });
 	    $("#I").click(function() {
 	        socket.emit("setNextType", "I");
+	        setNext("I");
 	    });
 	    $("#T").click(function() {
 	        socket.emit("setNextType", "T");
+	        setNext("T");
 	    });
 	    $("#Random").click(function() {
 	        socket.emit("setColour", "Random");

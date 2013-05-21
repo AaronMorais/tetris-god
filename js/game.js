@@ -50,10 +50,15 @@ function initGame(human) {
 		setGravity();
 		new HumanInput();
 		new HumanClient();
-		$("#UserStatus").text("You are human.");
+		$(".UserStatus").text("You are human.");
+		$("#god-container").css({display:"none"});
+		$("#canvas-container").css({display:"block"});
 	} else {
-		$("#UserStatus").text("You are God!");
+
+		$(".UserStatus").text("You are God!");
 		new GodClient();
+		$("#canvas-container").css({display:"none"});
+		$("#god-container").css({display:"block"});
 	}
 
 }
@@ -88,7 +93,7 @@ function setGravity() {
 
 function setNext(type) {
 	nextType = type ? type : (shapeTypes[Math.floor(Math.random() * shapeTypes.length)]);
-	$('#type').text("Next Piece is: " + nextType);
+	$('.type').text("Next Piece is: " + nextType);
 	drawNextShape();
 }
 
@@ -217,7 +222,7 @@ function draw() {
 	if(invalid) {
 		drawNextShape();
 		width = window.innerWidth;
-		height = window.innerHeight - 200;
+		height = window.innerHeight - 100;
 		width = height/2;
 
 		ctx.canvas.width  = width;
