@@ -1,7 +1,7 @@
 tetris-god
 ==========
 
-Two player HTML5 tetris where one player can choose the next players pieces as they play tetris.
+Two player HTML5 tetris where one player can choose the next player's pieces as they play tetris.
 
 Try it at http://tetris-god.herokuapp.com/ 
 Currently, there is one God controlling all players. 
