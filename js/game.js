@@ -222,7 +222,7 @@ function draw() {
 	if(invalid) {
 		drawNextShape();
 		width = window.innerWidth;
-		height = window.innerHeight - 100;
+		height = window.innerHeight - 200;
 		width = height/2;
 
 		ctx.canvas.width  = width;
