@@ -43,11 +43,11 @@ function initGame(human) {
 
 	setNext();
 	createGrid();
-	createShape();
 	setInterval(draw, 100);
 	resizePreview(ctxNext);
 	resizePreview(ctxHold);
 	if(human) {
+		createShape();
 		setGravity();
 		new HumanInput();
 		humanClient = new HumanClient();
@@ -100,6 +100,9 @@ function setNext(type) {
 function drawNextShape() {
 	var nextShape = new Shape(nextType, currentColourScheme);
 	nextShape.previewAs(ctxNext);
+	if (humanClient) {
+		humanClient.socket.emit("humanNext", nextType);
+	}
 }
 
 function resizePreview(view) {
@@ -119,6 +122,9 @@ function isGameOver() {
 
 function gameOver() {
 	console.log("game over");
+	if (humanClient) {
+		humanClient.socket.emit("humanGameOver");
+	}
 	setTimeout(function() {	location.reload();},1000);
 }
 
@@ -277,6 +283,9 @@ function hold(){
 		createShape();
 		setNext(currentNext);
 		canHold = false;
+	}
+	if (humanClient && inHold) {
+		humanClient.socket.emit("humanHold", JSON.stringify(inHold, replacer));
 	}
 }
 

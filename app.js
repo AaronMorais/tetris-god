@@ -22,7 +22,15 @@ socket.on('connection', function (socket) {
         socket.broadcast.emit("colourScheme",data);
     });
     socket.on('humanGridPoints', function (data) {
-        console.log(data);
         socket.broadcast.emit("humanGridPoints",data);
+    });
+    socket.on('humanHold', function (data) {
+        socket.broadcast.emit("humanHold",data);
+    });
+    socket.on('humanNext', function (data) {
+        socket.broadcast.emit("humanNext",data);
+    });
+    socket.on('humanGameOver', function (data) {
+        socket.broadcast.emit("humanGameOver",data);
     });
 });

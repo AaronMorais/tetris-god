@@ -19,8 +19,25 @@ function GodClient() {
 					}
 				}
 			}	
+			shape = null;
        		invalid = true;
         	draw();
+        });
+		socket.on('humanNext', function (msg) {
+			setNext(msg);
+		});
+        socket.on('humanHold', function (msg) {
+        	var inHoldJSON = JSON.parse(msg);
+        	inHold = new Shape(inHoldJSON.type);;
+        	drawHold();
+        });
+        socket.on('humanGameOver', function() {
+        	alert("The human lost!");
+			createGrid();
+			shape = null;
+       		invalid = true;
+        	draw();
+
         });
         $("#O").click(function() {
 	        socket.emit("setNextType", "O");
