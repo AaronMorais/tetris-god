@@ -1,15 +1,12 @@
 function HumanClient() {
-	var socket = io.connect(window.location.hostname);
-    socket.on('connect', function () {
-        socket.send('A client connected.');
-    });
-    socket.on('nextType', function (msg) {
+	this.socket = io.connect(window.location.hostname);
+    this.socket.on('nextType', function (msg) {
     	console.log(msg);
 		nextType = msg;
         invalid = true;
 		$('#type').text("GOD SAYS: Next Piece is: " + nextType);
     });
-    socket.on('newSpeed', function (msg) {
+    this.socket.on('newSpeed', function (msg) {
         console.log(msg);
         console.log(gravitySpeed);
         if(msg === "increase") {
@@ -22,11 +19,11 @@ function HumanClient() {
         }
         setGravity();
     });
-    socket.on('colourScheme', function (msg) {
+    this.socket.on('colourScheme', function (msg) {
     	console.log(msg);
 		colourScheme = msg;
     });
-    socket.on('disconnect', function () {
+    this.socket.on('disconnect', function () {
 		console.log('disconnected');
     });
 }

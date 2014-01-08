@@ -32,6 +32,7 @@ var score = [0,40,100,300,1200];
 var currentScore = 0;
 var canHold;
 var socket;
+var humanClient;
 
 function initGame(human) {
 	canvas = document.getElementById('canvas');
@@ -49,7 +50,7 @@ function initGame(human) {
 	if(human) {
 		setGravity();
 		new HumanInput();
-		new HumanClient();
+		humanClient = new HumanClient();
 		$(".UserStatus").text("You are human.");
 		$("#god-container").css({display:"none"});
 		$("#canvas-container").css({display:"block"});
@@ -57,7 +58,6 @@ function initGame(human) {
 
 		$(".UserStatus").text("You are God!");
 		new GodClient();
-		$("#canvas-container").css({display:"none"});
 		$("#god-container").css({display:"block"});
 	}
 
@@ -220,6 +220,17 @@ $(window).resize(function() {
 
 function draw() {
 	if(invalid) {
+		if (humanClient) {
+			var tempGridPoints = jQuery.extend(true, {}, gridPoints);
+			if (shape) {
+				for(var k = 0; k<shape.points.length; k++) {
+					x = shape.points[k].x;
+					y = shape.points[k].y;
+					tempGridPoints[x][y] = shape.points[k];
+				}
+			}
+			humanClient.socket.emit("humanGridPoints", JSON.stringify(tempGridPoints, replacer));
+		}
 		drawNextShape();
 		width = window.innerWidth;
 		height = window.innerHeight - 200;
@@ -244,6 +255,13 @@ function draw() {
 		}
 		invalid = false;
 	}
+}
+
+function replacer(key, value) {
+    if (typeof value === 'number' && !isFinite(value)) {
+        return String(value);
+    }
+    return value;
 }
 
 var inHold;

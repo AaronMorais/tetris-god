@@ -21,4 +21,8 @@ socket.on('connection', function (socket) {
 		console.log(data);
         socket.broadcast.emit("colourScheme",data);
     });
+    socket.on('humanGridPoints', function (data) {
+        console.log(data);
+        socket.broadcast.emit("humanGridPoints",data);
+    });
 });
